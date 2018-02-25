@@ -33,13 +33,15 @@ namespace WebAPI
             });
 
             // Add Db context
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly("DataAccess"))
+                options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("DataAccess"))
             );
+            var provider = services.BuildServiceProvider();
+            var dbContext = provider.GetService<ApplicationDbContext>();
+            services.AddScoped<IContactRepository>(r => new ContactRepository(dbContext, connectionString));
             services.AddAutoMapper();
 
-            services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IContactService, ContactService>();
             services.AddMvc();
         }

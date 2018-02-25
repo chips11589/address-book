@@ -7,8 +7,8 @@ namespace WebAPI.Services
 {
     public interface IContactService
     {
-        Task<IEnumerable<ContactDTO>> GetContacts();
+        Task<IEnumerable<ContactDTO>> GetContacts(string searchQuery);
         Task<IEnumerable<ContactAutoCompleteDTO>> GetContactAutoComplete(string searchQuery);
-        Task<ContactDTO> Get();
+        Task<ContactDTO> Get(Guid id);
     }
 }

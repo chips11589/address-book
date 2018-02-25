@@ -22,21 +22,20 @@ namespace WebAPI.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<ContactDTO>> Get(string searchQuery)
         {
-            return new string[] { "value1", "value2" };
+            return await _contactService.GetContacts(searchQuery);
         }
 
+        [EnableCors("CorsPolicy")]
         [HttpGet("[action]")]
         public async Task<IEnumerable<ContactAutoCompleteDTO>> GetAutoComplete(string searchQuery) =>
             await _contactService.GetContactAutoComplete(searchQuery);
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        [EnableCors("CorsPolicy")]
+        [HttpGet("[action]")]
+        public async Task<ContactDTO> GetContact(Guid id) =>
+            await _contactService.Get(id);
 
         // POST api/<controller>
         [HttpPost]

@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppModuleShared } from './app.shared.module';
 import { AppComponent } from './app.component';
 
+// javascript libraries for browser only
+import 'typeahead.js';
+
 @NgModule({
     bootstrap: [ AppComponent ],
     imports: [

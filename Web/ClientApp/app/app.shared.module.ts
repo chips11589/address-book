@@ -1,3 +1,5 @@
+/// <reference path="../../node_modules/@types/typeahead/index.d.ts" />
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +11,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { ContactModule } from './contact/contact.module';
 import { ContactComponent } from './contact/contact.component';
 import { ContactSearchComponent } from './contact/contact-search/contact-search.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -21,8 +24,10 @@ import { ContactSearchComponent } from './contact/contact-search/contact-search.
         HttpModule,
         FormsModule,
         ContactModule,
+        HttpClientModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'contact', pathMatch: 'full' },
+            { path: 'contact', component: ContactComponent },
             { path: 'contact/:id', component: ContactComponent },
             { path: '**', redirectTo: 'contact' }
         ])

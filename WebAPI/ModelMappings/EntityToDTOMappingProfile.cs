@@ -9,7 +9,7 @@ namespace WebAPI.ModelMappings
         public EntityToDTOMappingProfile()
         {
             CreateMap<Contact, ContactDTO>();
-            CreateMap<Contact, ContactAutoCompleteDTO>();
+            CreateMap<ContactAutoComplete, ContactAutoCompleteDTO>();
         }
     }
 }

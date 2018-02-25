@@ -18,22 +18,28 @@ namespace WebAPI.Services
             _mapper = mapper;
         }
 
-        public Task<ContactDTO> Get()
+        public async Task<ContactDTO> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var contact = await _contactRepository.GetByID(id);
+            var contactDto = _mapper.Map<ContactDTO>(contact);
+
+            return contactDto;
         }
 
         public async Task<IEnumerable<ContactAutoCompleteDTO>> GetContactAutoComplete(string searchQuery)
         {
-            var contacts = _contactRepository.Get(searchQuery);
+            var contacts = _contactRepository.GetAutoComplete(searchQuery);
             var contactDtos = contacts.Select(r => _mapper.Map<ContactAutoCompleteDTO>(r));
 
             return contactDtos;
         }
 
-        public Task<IEnumerable<ContactDTO>> GetContacts()
+        public async Task<IEnumerable<ContactDTO>> GetContacts(string searchQuery)
         {
-            throw new NotImplementedException();
+            var contacts = _contactRepository.Get(searchQuery);
+            var contactDtos = contacts.Select(r => _mapper.Map<ContactDTO>(r));
+
+            return contactDtos;
         }
     }
 }

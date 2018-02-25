@@ -1,0 +1,14 @@
+<div class="contact-list list-group">
+    <a [routerLink]="['/contact', contact.id]" class="contact-row list-group-item" *ngFor="let contact of contacts">
+        <div class="contact-title row">
+            <div class="col-sm-10"><b>{{contact.firstName}} {{contact.surname}}</b></div>
+            <div class="col-sm-2"><span class="btn btn-primary">Tags ></span></div>
+        </div>
+        <p class="contact-desc">
+            {{contact.title}} at {{contact.companyName}}
+        </p>
+        <div class="contact-tags">
+
+        </div>
+    </a>
+</div>
