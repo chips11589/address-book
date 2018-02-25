@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WebAPI.Services
 {
@@ -14,5 +15,7 @@ namespace WebAPI.Services
         public string Email { get; set; }
         public string LinkedIn { get; set; }
         public string Skype { get; set; }
+
+        public List<TagDTO> Tags { get; set; } = new List<TagDTO>();
     }
 }

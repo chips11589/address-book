@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -27,6 +28,7 @@ namespace DataAccess.Repositories
 
         public IQueryable<Contact> Get(string searchQuery)
         {
+            searchQuery = searchQuery ?? "";
             return GetFromSql("EXECUTE dbo.GetContacts {0}", searchQuery);
         }
 

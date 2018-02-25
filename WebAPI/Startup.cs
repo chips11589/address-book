@@ -40,6 +40,7 @@ namespace WebAPI
             var provider = services.BuildServiceProvider();
             var dbContext = provider.GetService<ApplicationDbContext>();
             services.AddScoped<IContactRepository>(r => new ContactRepository(dbContext, connectionString));
+            services.AddScoped<IContactTagRepository, ContactTagRepository>();
             services.AddAutoMapper();
 
             services.AddScoped<IContactService, ContactService>();

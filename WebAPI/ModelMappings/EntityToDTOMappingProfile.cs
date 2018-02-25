@@ -10,6 +10,7 @@ namespace WebAPI.ModelMappings
         {
             CreateMap<Contact, ContactDTO>();
             CreateMap<ContactAutoComplete, ContactAutoCompleteDTO>();
+            CreateMap<Tag, TagDTO>();
         }
     }
 }
