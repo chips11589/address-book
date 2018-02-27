@@ -1,8 +1,8 @@
 ﻿import { Component } from '@angular/core';
 import { ContactService } from '../services/contact.service';
-import { ContactAutoComplete } from '../models/contact-auto-complete.interface';
 import * as $ from 'jquery';
-import { Contact } from '../models/contact.interface';
+import { Contact, Tag } from '../models/contact.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'contact-list',
@@ -11,12 +11,25 @@ import { Contact } from '../models/contact.interface';
 })
 export class ContactListComponent {
     contacts: Contact[];
+    subscription: Subscription;
+    selectedItem: Contact;
+    allTags: Tag[];
 
     constructor(private contactService: ContactService) { }
 
     ngOnInit() {
-        this.contactService.contactObservable$.subscribe(contacts => {
+        this.subscription = this.contactService.contactObservable$.subscribe(contacts => {
             this.contacts = contacts;
         });
+
+
+    }
+
+    selectItem(contact: Contact) {
+        this.selectedItem = contact;
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

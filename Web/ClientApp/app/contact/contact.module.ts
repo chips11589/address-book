@@ -4,15 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { routing } from './contact.routing';
 import { ContactComponent } from './contact.component';
 import { ContactService } from './services/contact.service';
-import { ConfigService } from '../shared/utils/config.service';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
+import { ContactTagListComponent } from './contact-tag-list/contact-tag-list.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     imports: [
-        CommonModule, FormsModule, routing
+        CommonModule, FormsModule, routing, SharedModule
     ],
-    declarations: [ContactComponent, ContactListComponent, ContactDetailsComponent],
-    providers: [ContactService, ConfigService]
+    declarations: [ContactComponent, ContactListComponent, ContactDetailsComponent, ContactTagListComponent],
+    providers: [ContactService]
 })
 export class ContactModule { }

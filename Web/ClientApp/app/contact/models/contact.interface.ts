@@ -9,5 +9,7 @@
 
 export interface Tag {
     id: string,
-    name: string
+    name: string,
+    isEditing: boolean,
+    isChecked: boolean
 }

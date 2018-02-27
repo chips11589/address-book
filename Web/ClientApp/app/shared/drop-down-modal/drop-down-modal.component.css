@@ -1,0 +1,18 @@
+.drop-down-modal {
+    position: absolute;
+    width: 300px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    color: #333;
+    top: 40px;
+    display: none;
+}
+
+.modal-wrapper {
+    position: relative;
+}
+
+.list-group {
+    margin-bottom: 0;
+}

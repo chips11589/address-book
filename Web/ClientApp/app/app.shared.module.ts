@@ -12,6 +12,7 @@ import { ContactModule } from './contact/contact.module';
 import { ContactComponent } from './contact/contact.component';
 import { ContactSearchComponent } from './contact/contact-search/contact-search.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
         FormsModule,
         ContactModule,
         HttpClientModule,
+        SharedModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'contact', pathMatch: 'full' },
             { path: 'contact', component: ContactComponent },

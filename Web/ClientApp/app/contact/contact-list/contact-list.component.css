@@ -1,3 +1,19 @@
+li.contact-row {
+    cursor: pointer;
+}
+
+    li.contact-row:hover:not(.active) {
+        background-color: rgb(245, 245, 245);
+    }
+
+.tag-item {
+    margin-right: 5px;
+}
+
+.glyphicon {
+    font-size: 12px;
+}
+
 ::ng-deep .twitter-typeahead {
     width: 100%;
 }

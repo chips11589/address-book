@@ -11,11 +11,11 @@ namespace WebAPI.Controllers
 {
     [EnableCors("CorsPolicy")]
     [Route("api/[controller]")]
-    public class ContactController : Controller
+    public class TagController : Controller
     {
         private readonly IContactService _contactService;
 
-        public ContactController(IContactService contactService)
+        public TagController(IContactService contactService)
         {
             _contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));
         }
@@ -29,12 +29,25 @@ namespace WebAPI.Controllers
 
         [EnableCors("CorsPolicy")]
         [HttpGet("[action]")]
-        public async Task<IEnumerable<ContactAutoCompleteDTO>> GetAutoComplete(string searchQuery) =>
+        public async Task<IEnumerable<ContactAutoCompleteDTO>> AddTagsToContact(string searchQuery) =>
             await _contactService.GetContactAutoComplete(searchQuery);
 
-        [EnableCors("CorsPolicy")]
-        [HttpGet("[action]")]
-        public async Task<ContactDTO> GetContact(Guid id) =>
-            await _contactService.Get(id);
+        // POST api/<controller>
+        [HttpPost]
+        public void Post([FromBody]string value)
+        {
+        }
+
+        // PUT api/<controller>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]string value)
+        {
+        }
+
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
     }
 }

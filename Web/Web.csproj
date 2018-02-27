@@ -24,6 +24,7 @@
     <None Remove="ClientApp\app\contact\contact-details\contact-details.component.ts" />
     <None Remove="ClientApp\app\contact\contact-list\contact-list.component.ts" />
     <None Remove="ClientApp\app\contact\contact-search\contact-search.component.ts" />
+    <None Remove="ClientApp\app\contact\contact-tag-list\contact-tag-list.component.ts" />
     <None Remove="ClientApp\app\contact\contact.component.ts" />
     <None Remove="ClientApp\app\contact\contact.routing.ts" />
     <None Remove="ClientApp\app\contact\models\contact-auto-complete.interface.ts" />
@@ -31,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\app\contact\contact-tag-list\" />
+    <Folder Include="ClientApp\app\contact\tag-modal\" />
     <Folder Include="ClientApp\app\shared\notification-bar\" />
   </ItemGroup>
 
@@ -39,6 +40,7 @@
     <TypeScriptCompile Include="ClientApp\app\contact\contact-details\contact-details.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\contact\contact-list\contact-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\contact\contact-search\contact-search.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\contact\contact-tag-list\contact-tag-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\contact\contact.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\contact\contact.routing.ts" />
     <TypeScriptCompile Include="ClientApp\app\contact\models\contact-auto-complete.interface.ts" />

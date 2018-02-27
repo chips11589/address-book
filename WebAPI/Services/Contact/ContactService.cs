@@ -41,7 +41,7 @@ namespace WebAPI.Services
         public async Task<IEnumerable<ContactDTO>> GetContacts(string searchQuery)
         {
             var contacts = _contactRepository.Get(searchQuery);
-            var contactDtos = contacts.Select(r => _mapper.Map<ContactDTO>(r));
+            var contactDtos = contacts.Select(r => _mapper.Map<ContactDTO>(r)).ToList();
 
             if (contactDtos.Any())
             {

@@ -1,14 +1,21 @@
-<div class="contact-list list-group">
-    <a [routerLink]="['/contact', contact.id]" class="contact-row list-group-item" *ngFor="let contact of contacts">
+<ul class="contact-list list-group">
+    <li [routerLink]="['/contact', contact.id]" (click)="selectItem(contact)" [ngClass]="{'active': selectedItem && selectedItem.id == contact.id}" class="contact-row list-group-item" *ngFor="let contact of contacts">
         <div class="contact-title row">
             <div class="col-sm-10"><b>{{contact.firstName}} {{contact.surname}}</b></div>
-            <div class="col-sm-2"><span class="btn btn-primary">Tags ></span></div>
+            <div class="col-sm-2">
+                <drop-down-modal [buttonClass]="'btn btn-success'" [buttonLabel]="'Tags'"
+                                 [modalId]="'tag-modal-' + contact.id" [modalClass]="'tag-modal'">
+                    <contact-tag-list [contact]="contact" [allTags]="allTags"></contact-tag-list>
+                </drop-down-modal>
+            </div>
         </div>
         <p class="contact-desc">
             {{contact.title}} at {{contact.companyName}}
         </p>
         <div class="contact-tags">
-
+            <span *ngFor="let tag of contact.tags" class="btn btn-default tag-item">
+                {{tag.name}}
+            </span>
         </div>
-    </a>
-</div>
+    </li>
+</ul>
