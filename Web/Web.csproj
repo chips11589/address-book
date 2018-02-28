@@ -32,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\app\contact\tag-modal\" />
     <Folder Include="ClientApp\app\shared\notification-bar\" />
   </ItemGroup>
 
