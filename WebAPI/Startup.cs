@@ -41,9 +41,11 @@ namespace WebAPI
             var dbContext = provider.GetService<ApplicationDbContext>();
             services.AddScoped<IContactRepository>(r => new ContactRepository(dbContext, connectionString));
             services.AddScoped<IContactTagRepository, ContactTagRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
             services.AddAutoMapper();
 
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IContactTagService, ContactTagService>();
             services.AddMvc();
         }
 

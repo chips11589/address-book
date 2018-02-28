@@ -10,15 +10,15 @@ namespace WebAPI.Services
     public class ContactService : IContactService
     {
         private readonly IContactRepository _contactRepository;
-        private readonly IContactTagRepository _tagRepository;
+        private readonly IContactTagRepository _contactTagRepository;
         private readonly IMapper _mapper;
 
         public ContactService(IContactRepository contactRepository,
-            IContactTagRepository tagRepository,
+            IContactTagRepository contactTagRepository,
             IMapper mapper)
         {
             _contactRepository = contactRepository;
-            _tagRepository = tagRepository;
+            _contactTagRepository = contactTagRepository;
             _mapper = mapper;
         }
 
@@ -45,7 +45,7 @@ namespace WebAPI.Services
 
             if (contactDtos.Any())
             {
-                var tags = _tagRepository.GetByContactIds(contacts.Select(r => r.Id)).ToList();
+                var tags = _contactTagRepository.GetByContactIds(contacts.Select(r => r.Id)).ToList();
                 foreach (var contact in contactDtos)
                 {
                     var tagsOfContact = tags.Where(r => r.Item1 == contact.Id)
@@ -53,6 +53,15 @@ namespace WebAPI.Services
                     contact.Tags.AddRange(tagsOfContact);
                 }
             }
+
+            return contactDtos;
+        }
+
+        public async Task<IEnumerable<ContactDTO>> GetContactsByTag(TagDTO tag)
+        {
+            var contactTags = _contactTagRepository.Get(r => r.TagId == tag.Id);
+            var contacts = contactTags.Select(r => r.Contact).ToList();
+            var contactDtos = contacts.Select(r => _mapper.Map<ContactDTO>(r));
 
             return contactDtos;
         }

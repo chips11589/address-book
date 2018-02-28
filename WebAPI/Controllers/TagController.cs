@@ -13,41 +13,42 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class TagController : Controller
     {
-        private readonly IContactService _contactService;
+        private readonly IContactTagService _contactTagService;
 
-        public TagController(IContactService contactService)
+        public TagController(IContactTagService contactTagService)
         {
-            _contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));
-        }
-
-        // GET: api/<controller>
-        [HttpGet]
-        public async Task<IEnumerable<ContactDTO>> Get(string searchQuery)
-        {
-            return await _contactService.GetContacts(searchQuery);
+            _contactTagService = contactTagService ?? throw new ArgumentNullException(nameof(contactTagService));
         }
 
         [EnableCors("CorsPolicy")]
         [HttpGet("[action]")]
-        public async Task<IEnumerable<ContactAutoCompleteDTO>> AddTagsToContact(string searchQuery) =>
-            await _contactService.GetContactAutoComplete(searchQuery);
+        public async Task UpdateContactTags(ContactDTO contact) =>
+            await _contactTagService.UpdateContactTags(contact);
+
+        // GET: api/<controller>
+        [HttpGet]
+        public async Task<IEnumerable<TagDTO>> Get() =>
+            await _contactTagService.GetTags();
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task Post(TagDTO tag)
         {
+            await _contactTagService.CreateTag(tag);
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        // PUT api/<controller>
+        [HttpPut]
+        public async Task Put(TagDTO tag)
         {
+            await _contactTagService.UpdateTag(tag);
         }
 
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/<controller>
+        [HttpDelete]
+        public async Task Delete(TagDTO tag)
         {
+            await _contactTagService.RemoveTag(tag);
         }
     }
 }
