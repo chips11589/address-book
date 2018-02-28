@@ -1,0 +1,16 @@
+.tag-list.list-group {
+    margin-bottom: 0;
+}
+
+input[type=checkbox] {
+    margin-right: 5px;
+}
+
+input.inline-text-input {
+    width: 86%;
+    display: inline;
+}
+
+.action-menu {
+    font-size: 12px;
+}

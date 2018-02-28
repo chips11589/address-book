@@ -8,12 +8,13 @@ import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
 import { ContactTagListComponent } from './contact-tag-list/contact-tag-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { TagService } from './services/tag.service';
 
 @NgModule({
     imports: [
         CommonModule, FormsModule, routing, SharedModule
     ],
     declarations: [ContactComponent, ContactListComponent, ContactDetailsComponent, ContactTagListComponent],
-    providers: [ContactService]
+    providers: [ContactService, TagService]
 })
 export class ContactModule { }

@@ -1,17 +1,17 @@
 <div class="tag-list list-group form-vertical">
     <div class="tag-row row" *ngFor="let tag of allTags">
-        <div class="col-sm-9">
+        <div class="col-sm-8">
             <p>
                 <span *ngIf="!tag.isEditing" class="tag-read-only">
                     <label class="form-label"><input [(ngModel)]="tag.isChecked" type="checkbox" />{{tag.name}}</label>
                 </span>
                 <span *ngIf="tag.isEditing" class="tag-editor">
                     <input [(ngModel)]="tag.isChecked" type="checkbox" />
-                    <input [(ngModel)]="tag.name" (keyup.enter)="completeEdit(tag)" class="form-control" type="text" />
+                    <input [(ngModel)]="tag.name" (keyup.enter)="completeEdit(tag)" class="form-control inline-text-input" type="text" />
                 </span>
             </p>
         </div>
-        <div class="col-sm-9"><a (click)="editTag(tag)">Edit</a> / <a (click)="deleteTag(tag)">Delete</a></div>
+        <div class="col-sm-4 action-menu"><a (click)="editTag(tag)">Edit</a> / <a (click)="deleteTag(tag)">Delete</a></div>
     </div>
     <div class="new-tag-input">
         <input [(ngModel)]="newTagName" class="form-control" type="text" />
