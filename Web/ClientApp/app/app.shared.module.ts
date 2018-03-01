@@ -1,4 +1,5 @@
 /// <reference path="../../node_modules/@types/typeahead/index.d.ts" />
+/// <reference path="shared/utils/array.extension.d.ts" />
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';

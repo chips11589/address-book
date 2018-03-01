@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 
 // javascript libraries for browser only
 import 'typeahead.js';
+import './shared/utils/array.extension.js';
 
 @NgModule({
     bootstrap: [ AppComponent ],

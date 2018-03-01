@@ -4,8 +4,12 @@
             <div class="col-sm-10"><b>{{contact.firstName}} {{contact.surname}}</b></div>
             <div class="col-sm-2">
                 <drop-down-modal [buttonClass]="'btn btn-success'" [buttonLabel]="'Tags'"
-                                 [modalId]="'tag-modal-' + contact.id" [modalClass]="'tag-modal'">
-                    <contact-tag-list [contact]="contact" [allTags]="allTags"></contact-tag-list>
+                                 [modalId]="'tag-modal-' + contact.id" [modalClass]="'tag-modal'"
+                                 (onOpen)="onModalOpen(contact)"
+                                 (onClosed)="onModalClosed(contact.id)">
+                    <contact-tag-list [contact]="contact" [allTags]="allTags"
+                                      (onTagRemoved)="onTagRemoved($event)"
+                                      ></contact-tag-list>
                 </drop-down-modal>
             </div>
         </div>

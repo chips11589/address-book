@@ -1,6 +1,6 @@
 <div id="{{modalWrapperId}}" class="modal-wrapper">
     <button (click)="showModal($event)" class="{{buttonClass}}">{{buttonLabel}} <span class='glyphicon glyphicon-chevron-down'></span></button>
-    <div id="{{modalId}}" (click)="showModal($event)" class="{{modalClass}} drop-down-modal">
+    <div id="{{modalId}}" class="{{modalClass}} drop-down-modal">
         <ng-content></ng-content>
     </div>
 </div>

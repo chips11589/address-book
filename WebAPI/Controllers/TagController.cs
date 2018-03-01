@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
         }
 
         [EnableCors("CorsPolicy")]
-        [HttpGet("[action]")]
+        [HttpPost("[action]")]
         public async Task UpdateContactTags(ContactDTO contact) =>
             await _contactTagService.UpdateContactTags(contact);
 
@@ -46,8 +46,12 @@ namespace WebAPI.Controllers
 
         // DELETE api/<controller>
         [HttpDelete]
-        public async Task Delete(TagDTO tag)
+        public async Task Delete(Guid tagId)
         {
+            var tag = new TagDTO
+            {
+                Id = tagId
+            };
             await _contactTagService.RemoveTag(tag);
         }
     }

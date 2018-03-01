@@ -8,6 +8,7 @@ import '../../shared/utils/rxjs-operators';
 import { BaseService } from '../../shared/services/base.service';
 import { ConfigService } from '../../shared/utils/config.service';
 import { HttpClient } from '@angular/common/http';
+import { Tag, Contact } from '../models/contact.interface';
 
 @Injectable()
 export class TagService extends BaseService {
@@ -21,6 +22,21 @@ export class TagService extends BaseService {
 
     getTags() {
         return this.http.get(this.baseUrl + '/tag')
+            .catch(this.handleError);
+    }
+
+    removeTag(tagId: any) {
+        return this.http.delete(this.baseUrl + '/tag?tagId=' + tagId)
+            .catch(this.handleError);
+    }
+
+    insertTag(tag: Tag) {
+        return this.http.post(this.baseUrl + '/tag', { tag: tag })
+            .catch(this.handleError);
+    }
+
+    updateContactTags(contact: Contact) {
+        return this.http.post(this.baseUrl + '/tag/updateContactTags', { contact: contact })
             .catch(this.handleError);
     }
 }

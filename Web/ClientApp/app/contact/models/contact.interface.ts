@@ -10,6 +10,6 @@
 export interface Tag {
     id: string,
     name: string,
-    isEditing: boolean,
-    isChecked: boolean
+    isEditing?: boolean,
+    isChecked?: boolean
 }

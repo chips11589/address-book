@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ContactService } from '../services/contact.service';
 import { Contact, Tag } from '../models/contact.interface';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class ContactTagListComponent {
     @Input() contact: Contact;
     @Input() allTags: Tag[];
+    @Output() onTagRemoved: EventEmitter<any> = new EventEmitter();
     newTagName: string;
     subscription: Subscription;
 
@@ -25,14 +26,35 @@ export class ContactTagListComponent {
         return false;
     }
 
+    private removeContactTag(tag: Tag) {
+        var removingTag = this.contact.tags.find(contactTag => contactTag.id === tag.id);
+        if (typeof removingTag !== 'undefined') {
+            this.contact.tags.remove(removingTag);
+        }
+    }
+
+    onCheckChanged(tag: Tag, value: boolean) {
+        if (value) {
+            this.contact.tags.push(tag);
+        } else {
+            this.removeContactTag(tag);
+        }
+    }
+
     completeEdit(tag: Tag) {
-        // todo: submit edit request
         tag.isEditing = false;
+    }
+
+    insertTag() {
+        var time = new Date().getTime();
+        this.allTags.push({ id: '-' + time, name: this.newTagName });
+        this.newTagName = '';
     }
 
     deleteTag(tag: Tag) {
         if (confirm('Are you sure you want to delete this record?')) {
-            // todo: remove tag from database
+            this.allTags.remove(tag);
+            this.onTagRemoved.emit(tag);
         }
         return false;
     }

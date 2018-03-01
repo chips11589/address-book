@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as $ from 'jquery';
 
 @Component({
@@ -11,6 +11,9 @@ export class DropDownModalComponent {
     @Input() buttonClass: string | null;
     @Input() buttonLabel: string | null;
     @Input() modalClass: string | null;
+    @Output() onOpen: EventEmitter<any> = new EventEmitter();
+    @Output() onClosed: EventEmitter<any> = new EventEmitter();
+
     modalWrapperId: string;
     isModalOpen: boolean;
     $modal: any;
@@ -24,7 +27,7 @@ export class DropDownModalComponent {
         _self.$modal = $('#' + this.modalId);
 
         $(document).click(function (e) {
-            if (!e.target || !_self.isModalOpen) {
+            if (!e.target || !_self.isModalOpen || e.target.localName === 'a') {
                 return;
             }
 
@@ -34,12 +37,15 @@ export class DropDownModalComponent {
             // if the target of the click isn't the container nor a descendant of the container
             if (!container.is(e.target) && container.has(e.target).length === 0) {
                 _self.$modal.hide();
+                _self.onClosed.emit();
+                _self.isModalOpen = false;
             }
         });
     }
 
     showModal(event: any) {
         this.$modal.show();
+        this.onOpen.emit();
         this.isModalOpen = true;
     }
 }
