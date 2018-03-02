@@ -26,6 +26,13 @@ namespace DataAccess.Repositories
             DbContext.ContactTags.RemoveRange(contactTags);
         }
 
+        public async Task DeleteByTagId(Guid tagId)
+        {
+            var contactTags = DbContext.ContactTags.Where(r => r.TagId == tagId);
+
+            DbContext.ContactTags.RemoveRange(contactTags);
+        }
+
         public async Task InsertContactTags(IEnumerable<ContactTag> contactTags)
         {
             await DbContext.ContactTags.AddRangeAsync(contactTags);

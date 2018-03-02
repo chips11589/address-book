@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebAPI.Services
@@ -9,6 +8,7 @@ namespace WebAPI.Services
     {
         Task<IEnumerable<ContactDTO>> GetContacts(string searchQuery);
         Task<IEnumerable<ContactAutoCompleteDTO>> GetContactAutoComplete(string searchQuery);
+        Task<IEnumerable<ContactDTO>> GetContactsByTag(Guid tagId);
         Task<ContactDTO> Get(Guid id);
     }
 }

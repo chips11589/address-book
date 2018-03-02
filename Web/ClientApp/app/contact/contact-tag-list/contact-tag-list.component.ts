@@ -2,6 +2,7 @@
 import { ContactService } from '../services/contact.service';
 import { Contact, Tag } from '../models/contact.interface';
 import { Subscription } from 'rxjs';
+import { TagService } from '../services/tag.service';
 
 @Component({
     selector: 'contact-tag-list',
@@ -12,10 +13,11 @@ export class ContactTagListComponent {
     @Input() contact: Contact;
     @Input() allTags: Tag[];
     @Output() onTagRemoved: EventEmitter<any> = new EventEmitter();
+    @Output() onTagEdited: EventEmitter<any> = new EventEmitter();
     newTagName: string;
     subscription: Subscription;
 
-    constructor(private contactService: ContactService) { }
+    constructor(private contactService: ContactService, private tagService: TagService) { }
 
     ngOnInit() {
         
@@ -42,19 +44,30 @@ export class ContactTagListComponent {
     }
 
     completeEdit(tag: Tag) {
-        tag.isEditing = false;
+        this.tagService.updateTag(tag).subscribe(() => {
+            this.onTagEdited.emit(tag);
+            tag.isEditing = false;
+        });
     }
 
     insertTag() {
-        var time = new Date().getTime();
-        this.allTags.push({ id: '-' + time, name: this.newTagName });
+        if (!this.newTagName) {
+            return;
+        }
+
+        var newTag = { name: this.newTagName };
+        this.tagService.insertTag(newTag).subscribe((tag) => {
+            this.allTags.push(tag);
+        });
         this.newTagName = '';
     }
 
     deleteTag(tag: Tag) {
         if (confirm('Are you sure you want to delete this record?')) {
-            this.allTags.remove(tag);
-            this.onTagRemoved.emit(tag);
+            this.tagService.removeTag(tag.id).subscribe(() => {
+                this.allTags.remove(tag);
+                this.onTagRemoved.emit(tag);
+            });
         }
         return false;
     }

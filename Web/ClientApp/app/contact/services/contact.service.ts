@@ -29,6 +29,13 @@ export class ContactService extends BaseService {
             }, this.handleError);
     }
 
+    searchContactByTag(tagId: any   ) {
+        return this.http.get(this.baseUrl + '/contact/getContactsByTag?tagId=' + tagId)
+            .subscribe(result => {
+                this._contactSource.next(result as Contact[]);
+            }, this.handleError);
+    }
+
     getContact(id: any) {
         return this.http.get(this.baseUrl + '/contact/getContact?id=' + id)
             .catch(this.handleError);

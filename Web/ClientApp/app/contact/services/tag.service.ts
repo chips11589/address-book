@@ -14,6 +14,7 @@ import { Tag, Contact } from '../models/contact.interface';
 export class TagService extends BaseService {
 
     baseUrl: string = '';
+    allTags: Tag[];
 
     constructor(private http: HttpClient, private configService: ConfigService) {
         super();
@@ -25,18 +26,23 @@ export class TagService extends BaseService {
             .catch(this.handleError);
     }
 
+    updateTag(tag: Tag) {
+        return this.http.put(this.baseUrl + '/tag', tag)
+            .catch(this.handleError);
+    }
+
     removeTag(tagId: any) {
         return this.http.delete(this.baseUrl + '/tag?tagId=' + tagId)
             .catch(this.handleError);
     }
 
     insertTag(tag: Tag) {
-        return this.http.post(this.baseUrl + '/tag', { tag: tag })
+        return this.http.post(this.baseUrl + '/tag', tag)
             .catch(this.handleError);
     }
 
     updateContactTags(contact: Contact) {
-        return this.http.post(this.baseUrl + '/tag/updateContactTags', { contact: contact })
+        return this.http.post(this.baseUrl + '/tag/updateContactTags', contact)
             .catch(this.handleError);
     }
 }

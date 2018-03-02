@@ -1,10 +1,8 @@
 ﻿using Dapper;
 using DataAccess.Models;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace DataAccess.Repositories
 {
@@ -18,25 +16,24 @@ namespace DataAccess.Repositories
             _connectionString = connectionString;
         }
 
-        private IDbConnection Connection
-        {
-            get
-            {
-                return new SqlConnection(_connectionString);
-            }
-        }
-
-        public IQueryable<Contact> Get(string searchQuery)
+        public IEnumerable<Contact> Get(string searchQuery)
         {
             searchQuery = searchQuery ?? "";
-            return GetFromSql("EXECUTE dbo.GetContacts {0}", searchQuery);
+
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                dbConnection.Open();
+
+                return dbConnection
+                    .Query<Contact>("EXECUTE dbo.GetContacts @searchQuery", new { searchQuery });
+            }
         }
 
         public IEnumerable<ContactAutoComplete> GetAutoComplete(string searchQuery)
         {
             searchQuery = searchQuery ?? "";
 
-            using (IDbConnection dbConnection = Connection)
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
             {
                 dbConnection.Open();
 

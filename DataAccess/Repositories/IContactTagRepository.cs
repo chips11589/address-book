@@ -10,6 +10,7 @@ namespace DataAccess.Repositories
     {
         IQueryable<Tuple<Guid, Tag>> GetByContactIds(IEnumerable<Guid> contactIds);
         Task DeleteByContactId(Guid contactId);
+        Task DeleteByTagId(Guid tagId);
         Task InsertContactTags(IEnumerable<ContactTag> contactTags);
     }
 }

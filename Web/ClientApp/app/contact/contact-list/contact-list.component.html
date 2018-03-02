@@ -6,9 +6,10 @@
                 <drop-down-modal [buttonClass]="'btn btn-success'" [buttonLabel]="'Tags'"
                                  [modalId]="'tag-modal-' + contact.id" [modalClass]="'tag-modal'"
                                  (onOpen)="onModalOpen(contact)"
-                                 (onClosed)="onModalClosed(contact.id)">
+                                 (onClosed)="onModalClosed(contact)">
                     <contact-tag-list [contact]="contact" [allTags]="allTags"
                                       (onTagRemoved)="onTagRemoved($event)"
+                                      (onTagEdited)="onTagEdited($event)"
                                       ></contact-tag-list>
                 </drop-down-modal>
             </div>

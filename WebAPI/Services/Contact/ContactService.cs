@@ -32,7 +32,9 @@ namespace WebAPI.Services
 
         public async Task<IEnumerable<ContactAutoCompleteDTO>> GetContactAutoComplete(string searchQuery)
         {
-            var contacts = _contactRepository.GetAutoComplete(searchQuery);
+            var contacts = _contactRepository.GetAutoComplete(searchQuery)
+                .OrderBy(r => r.Suggestion)
+                .ToList();
             var contactDtos = contacts.Select(r => _mapper.Map<ContactAutoCompleteDTO>(r));
 
             return contactDtos;
@@ -40,30 +42,45 @@ namespace WebAPI.Services
 
         public async Task<IEnumerable<ContactDTO>> GetContacts(string searchQuery)
         {
-            var contacts = _contactRepository.Get(searchQuery);
+            if (string.IsNullOrEmpty(searchQuery))
+            {
+                return new List<ContactDTO>();
+            }
+
+            var contacts = _contactRepository.Get(searchQuery).ToList();
             var contactDtos = contacts.Select(r => _mapper.Map<ContactDTO>(r)).ToList();
 
             if (contactDtos.Any())
             {
-                var tags = _contactTagRepository.GetByContactIds(contacts.Select(r => r.Id)).ToList();
-                foreach (var contact in contactDtos)
-                {
-                    var tagsOfContact = tags.Where(r => r.Item1 == contact.Id)
-                        .Select(r => _mapper.Map<TagDTO>(r.Item2));
-                    contact.Tags.AddRange(tagsOfContact);
-                }
+                AddTagsToContact(contactDtos);
             }
 
             return contactDtos;
         }
 
-        public async Task<IEnumerable<ContactDTO>> GetContactsByTag(TagDTO tag)
+        public async Task<IEnumerable<ContactDTO>> GetContactsByTag(Guid tagId)
         {
-            var contactTags = _contactTagRepository.Get(r => r.TagId == tag.Id);
+            var contactTags = _contactTagRepository.Get(r => r.TagId == tagId);
             var contacts = contactTags.Select(r => r.Contact).ToList();
-            var contactDtos = contacts.Select(r => _mapper.Map<ContactDTO>(r));
+            var contactDtos = contacts.Select(r => _mapper.Map<ContactDTO>(r)).ToList();
+
+            if (contactDtos.Any())
+            {
+                AddTagsToContact(contactDtos);
+            }
 
             return contactDtos;
+        }
+
+        private void AddTagsToContact(List<ContactDTO> contactDtos)
+        {
+            var tags = _contactTagRepository.GetByContactIds(contactDtos.Select(r => r.Id)).ToList();
+            foreach (var contact in contactDtos)
+            {
+                var tagsOfContact = tags.Where(r => r.Item1 == contact.Id)
+                    .Select(r => _mapper.Map<TagDTO>(r.Item2));
+                contact.Tags.AddRange(tagsOfContact);
+            }
         }
     }
 }

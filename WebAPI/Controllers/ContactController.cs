@@ -29,6 +29,11 @@ namespace WebAPI.Controllers
 
         [EnableCors("CorsPolicy")]
         [HttpGet("[action]")]
+        public async Task<IEnumerable<ContactDTO>> GetContactsByTag(Guid tagId) =>
+            await _contactService.GetContactsByTag(tagId);
+
+        [EnableCors("CorsPolicy")]
+        [HttpGet("[action]")]
         public async Task<IEnumerable<ContactAutoCompleteDTO>> GetAutoComplete(string searchQuery) =>
             await _contactService.GetContactAutoComplete(searchQuery);
 

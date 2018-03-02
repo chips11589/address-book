@@ -6,7 +6,7 @@ namespace DataAccess.Repositories
 {
     public interface IContactRepository : IGenericRepository<Contact>
     {
-        IQueryable<Contact> Get(string searchQuery);
+        IEnumerable<Contact> Get(string searchQuery);
         IEnumerable<ContactAutoComplete> GetAutoComplete(string searchQuery);
     }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import * as $ from 'jquery';
 
 @Component({
@@ -14,25 +14,22 @@ export class DropDownModalComponent {
     @Output() onOpen: EventEmitter<any> = new EventEmitter();
     @Output() onClosed: EventEmitter<any> = new EventEmitter();
 
-    modalWrapperId: string;
+    @ViewChild('modal') modal: ElementRef;
+    @ViewChild('modalWrapper') modalWrapper: ElementRef;
+
     isModalOpen: boolean;
     $modal: any;
 
-    ngOnInit() {
-        this.modalWrapperId = 'modal-wrapper' + this.modalId;
-    }
-
     ngAfterViewInit() {
         var _self = this;
-        _self.$modal = $('#' + this.modalId);
+        _self.$modal = $(this.modal.nativeElement);
 
         $(document).click(function (e) {
             if (!e.target || !_self.isModalOpen || e.target.localName === 'a') {
                 return;
             }
 
-            var wrapperIdSelector = '#' + _self.modalWrapperId;
-            var container = $(wrapperIdSelector);
+            var container = $(_self.modalWrapper.nativeElement);
 
             // if the target of the click isn't the container nor a descendant of the container
             if (!container.is(e.target) && container.has(e.target).length === 0) {

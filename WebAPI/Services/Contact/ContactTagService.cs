@@ -36,6 +36,8 @@ namespace WebAPI.Services
             _tagRepository.Insert(tagEntity);
 
             await _tagRepository.DbContext.SaveChangesAsync();
+
+            tag.Id = tagEntity.Id;
         }
 
         public async Task UpdateTag(TagDTO tag)
@@ -48,6 +50,8 @@ namespace WebAPI.Services
 
         public async Task RemoveTag(TagDTO tag)
         {
+            await _contactTagRepository.DeleteByTagId(tag.Id);
+
             var tagEntity = _mapper.Map<Tag>(tag);
             _tagRepository.Delete(tagEntity);
 

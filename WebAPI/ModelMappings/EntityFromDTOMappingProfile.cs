@@ -9,6 +9,7 @@ namespace WebAPI.ModelMappings
         public EntityFromDTOMappingProfile()
         {
             CreateMap<ContactDTO, Contact>();
+            CreateMap<TagDTO, Tag>();
         }
     }
 }
