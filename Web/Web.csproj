@@ -29,10 +29,7 @@
     <None Remove="ClientApp\app\contact\contact.routing.ts" />
     <None Remove="ClientApp\app\contact\models\contact-auto-complete.interface.ts" />
     <None Remove="ClientApp\app\contact\models\contact.interface.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\app\shared\notification-bar\" />
+    <None Remove="ClientApp\app\shared\models\notification.interface.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +41,7 @@
     <TypeScriptCompile Include="ClientApp\app\contact\contact.routing.ts" />
     <TypeScriptCompile Include="ClientApp\app\contact\models\contact-auto-complete.interface.ts" />
     <TypeScriptCompile Include="ClientApp\app\contact\models\contact.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\app\shared\models\notification.interface.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

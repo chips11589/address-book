@@ -16,6 +16,6 @@
         <div class="col-sm-4 action-menu"><a (click)="editTag(tag)">Edit</a> / <a (click)="deleteTag(tag)">Delete</a></div>
     </div>
     <div class="new-tag-input">
-        <input [(ngModel)]="newTagName" (keyup.enter)="insertTag()" class="form-control" type="text" />
+        <input [(ngModel)]="newTagName" (keyup.enter)="insertTag()" placeholder="Add Tag and press Enter" class="form-control" type="text" />
     </div>
 </div>

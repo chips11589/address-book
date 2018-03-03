@@ -6,7 +6,6 @@ export abstract class BaseService {
     constructor() { }
 
     protected handleError(error: any) {
-        debugger;
         var applicationError = error.headers.get('Application-Error');
 
         // either applicationError in header or model error in body

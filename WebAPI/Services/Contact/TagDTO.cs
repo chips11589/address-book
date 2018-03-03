@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebAPI.Services
+namespace WebAPI.Services.Contact
 {
     public class TagDTO
     {

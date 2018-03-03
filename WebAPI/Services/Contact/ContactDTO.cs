@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebAPI.Services
+namespace WebAPI.Services.Contact
 {
     public class ContactDTO
     {

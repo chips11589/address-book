@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebAPI.Services
+namespace WebAPI.Services.Contact
 {
     public interface IContactService
     {

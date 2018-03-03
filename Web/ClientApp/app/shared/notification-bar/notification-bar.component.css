@@ -1,0 +1,21 @@
+.notification-modal {
+    position: absolute;
+    width: 260px;
+    background: #efefef;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    color: #333;
+    top: 40px;
+    right: 0;
+    display: none;
+    text-align: left;
+    z-index: 9999;
+}
+
+.modal-wrapper {
+    position: relative;
+}
+
+.list-group {
+    margin-bottom: 0;
+}

@@ -64,7 +64,7 @@ export class ContactTagListComponent {
 
     deleteTag(tag: Tag) {
         if (confirm('Are you sure you want to delete this record?')) {
-            this.tagService.removeTag(tag.id).subscribe(() => {
+            this.tagService.removeTag(tag).subscribe(() => {
                 this.allTags.remove(tag);
                 this.onTagRemoved.emit(tag);
             });

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DataAccess.Models;
-using WebAPI.Services;
+using WebAPI.Services.Contact;
 
 namespace WebAPI.ModelMappings
 {

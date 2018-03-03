@@ -31,8 +31,8 @@ export class TagService extends BaseService {
             .catch(this.handleError);
     }
 
-    removeTag(tagId: any) {
-        return this.http.delete(this.baseUrl + '/tag?tagId=' + tagId)
+    removeTag(tag: Tag) {
+        return this.http.delete(this.baseUrl + '/tag?tagId=' + tag.id + '&tagName=' + tag.name)
             .catch(this.handleError);
     }
 

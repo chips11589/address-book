@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Services;
+using WebAPI.Services.Contact;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAPI.Controllers
 {
-    [EnableCors("CorsPolicy")]
     [Route("api/[controller]")]
     public class TagController : Controller
     {
@@ -20,7 +19,6 @@ namespace WebAPI.Controllers
             _contactTagService = contactTagService ?? throw new ArgumentNullException(nameof(contactTagService));
         }
 
-        [EnableCors("CorsPolicy")]
         [HttpPost("[action]")]
         public async Task<IActionResult> UpdateContactTags([FromBody]ContactDTO contact)
         {
@@ -52,11 +50,12 @@ namespace WebAPI.Controllers
 
         // DELETE api/<controller>
         [HttpDelete]
-        public async Task<IActionResult> Delete(Guid tagId)
+        public async Task<IActionResult> Delete(Guid tagId, string tagName)
         {
             var tag = new TagDTO
             {
-                Id = tagId
+                Id = tagId,
+                Name = tagName
             };
             await _contactTagService.RemoveTag(tag);
 

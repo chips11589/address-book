@@ -4,6 +4,8 @@ import * as $ from 'jquery';
 import { Contact, Tag } from '../models/contact.interface';
 import { Subscription } from 'rxjs';
 import { TagService } from '../services/tag.service';
+import { NotificationService } from '../../shared/services/notification.service';
+import { NotificationTypes } from '../../shared/models/notification.interface';
 
 @Component({
     selector: 'contact-list',
@@ -13,11 +15,13 @@ import { TagService } from '../services/tag.service';
 export class ContactListComponent {
     contacts: Contact[];
     subscription: Subscription;
+    notificationSubscription: Subscription;
     selectedItem: Contact;
     allTags: Tag[];
     originalTags: Tag[];
 
-    constructor(private contactService: ContactService, private tagService: TagService) { }
+    constructor(private contactService: ContactService, private tagService: TagService,
+        private notificationService: NotificationService) { }
 
     ngOnInit() {
         this.subscription = this.contactService.contactObservable$.subscribe(contacts => {
@@ -28,6 +32,29 @@ export class ContactListComponent {
             this.allTags = tags;
             this.tagService.allTags = tags;
         });
+
+        this.notificationSubscription = this.notificationService.notificationObservable$
+            .subscribe(notifications => {
+                if (notifications.length === 0) {
+                    return;
+                }
+
+                for (var i = 0; i < notifications.length; i++) {
+                    var notification = notifications[i];
+
+                    switch (notification.notificationType) {
+                        case NotificationTypes.TagUpdated:
+                            this.onTagEdited({ id: notification.targetObjectId, name: notification.targetObjectName });
+                            break;
+                        case NotificationTypes.TagAdded:
+                            this.onTagAdded({ id: notification.targetObjectId, name: notification.targetObjectName });
+                            break;
+                        case NotificationTypes.TagRemoved:
+                            this.onTagRemoved({ id: notification.targetObjectId, name: notification.targetObjectName });
+                            break;
+                    }
+                }
+            });
     }
 
     onModalOpen(contact: Contact) {
@@ -64,6 +91,13 @@ export class ContactListComponent {
         this.selectedItem = contact;
     }
 
+    onTagAdded(tag: Tag) {
+        var addedGlobalTag = this.allTags.find(globalTag => globalTag.id === tag.id);
+        if (typeof addedGlobalTag === 'undefined') {
+            this.allTags.push(tag);
+        }
+    }
+
     onTagEdited(tag: Tag) {
         for (var i = 0; i < this.contacts.length; i++) {
             let contact = this.contacts[i];
@@ -73,6 +107,11 @@ export class ContactListComponent {
             if (typeof updatedTag !== 'undefined') {
                 updatedTag.name = tag.name;
             }
+        }
+
+        var updatedGlobalTag = this.allTags.find(globalTag => globalTag.id === tag.id);
+        if (typeof updatedGlobalTag !== 'undefined') {
+            updatedGlobalTag.name = tag.name;
         }
     }
 
@@ -86,9 +125,15 @@ export class ContactListComponent {
                 contact.tags.remove(removedTag);
             }
         }
+
+        var removedGlobalTag = this.allTags.find(globalTag => globalTag.id === tag.id);
+        if (typeof removedGlobalTag !== 'undefined') {
+            this.allTags.remove(removedGlobalTag);
+        }
     }
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+        this.notificationSubscription.unsubscribe();
     }
 }

@@ -9,12 +9,13 @@ import { ContactDetailsComponent } from './contact-details/contact-details.compo
 import { ContactTagListComponent } from './contact-tag-list/contact-tag-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { TagService } from './services/tag.service';
+import { NotificationService } from '../shared/services/notification.service';
 
 @NgModule({
     imports: [
         CommonModule, FormsModule, routing, SharedModule
     ],
     declarations: [ContactComponent, ContactListComponent, ContactDetailsComponent, ContactTagListComponent],
-    providers: [ContactService, TagService]
+    providers: [ContactService, TagService, NotificationService]
 })
 export class ContactModule { }
