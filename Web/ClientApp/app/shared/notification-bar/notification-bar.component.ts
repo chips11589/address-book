@@ -18,22 +18,33 @@ export class NotificationBarComponent {
 
     isModalOpen: boolean = false;
     $modal: JQuery<HTMLElement>;
+    timeOut: number = 1000;
+    timer: any;
 
     constructor(private notificationService: NotificationService) { }
 
     ngOnInit() {
         this.subscription = this.notificationService.notificationObservable$
             .subscribe(notifications => {
+                var _self = this;
+
                 if (notifications.length === 0) {
                     return;
                 }
 
                 this.notifications = notifications
-                this.$modal.show(() => {
-                    this.isModalOpen = true;
-                }).delay(3000).hide(() => {
-                    this.isModalOpen = false;
-                });
+
+                if (this.timer) {
+                    clearTimeout(this.timer);
+                }
+
+                this.timer = setTimeout(function () {
+                    _self.$modal.show(() => {
+                        _self.isModalOpen = true;
+                    }).delay(3000).hide(() => {
+                        _self.isModalOpen = false;
+                    });
+                }, this.timeOut);
             });
     }
 

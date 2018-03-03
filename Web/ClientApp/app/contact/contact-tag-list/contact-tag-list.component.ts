@@ -57,7 +57,10 @@ export class ContactTagListComponent {
 
         var newTag = { name: this.newTagName };
         this.tagService.insertTag(newTag).subscribe((tag) => {
-            this.allTags.push(tag);
+            var addedGlobalTag = this.allTags.find(globalTag => globalTag.id === tag.id);
+            if (typeof addedGlobalTag === 'undefined') {
+                this.allTags.push(tag);
+            }
         });
         this.newTagName = '';
     }

@@ -25,7 +25,7 @@ export class NotificationService extends BaseService {
 
         this.notificationHub = new HubConnection(
             this.baseUrl + '/notificationHub',
-            { transport: TransportType.WebSockets | TransportType.LongPolling });
+            { transport: TransportType.WebSockets });
 
         this.notificationHub.on(
             "Send",
