@@ -1,3 +1,7 @@
 <div class="contact-search">
-    <input [(ngModel)]="searchQuery" maxlength="255" (keyup.enter)="searchContact()" placeholder="Search by Name, Company or #Tag" type="text" class="form-control typeahead" />
+    <input typeahead [displayPath]="'suggestion'" [getSourceCallback]="getSourceCallback.bind(this)" [itemSelectCallback]="itemSelectCallback.bind(this)"
+           [(ngModel)]="searchQuery"
+           maxlength="255"
+           (keyup.enter)="searchContact()"
+           placeholder="Search by Name, Company or #Tag" type="text" class="form-control typeahead" />
 </div>

@@ -55,8 +55,4 @@ export class NotificationBarComponent {
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
-
-    showModal(event: any) {
-
-    }
 }
