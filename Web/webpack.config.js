@@ -4,6 +4,9 @@ const merge = require('webpack-merge');
 const AotPlugin = require('@ngtools/webpack').AotPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 
+// Use new Uglify Js version to support ES 6 https://github.com/aspnet/SignalR/issues/867
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
 module.exports = (env) => {
     // Configuration in common to both client-side and server-side bundles
     const isDevBuild = !(env && env.prod);
@@ -44,7 +47,9 @@ module.exports = (env) => {
             })
         ] : [
             // Plugins that apply in production builds only
-            new webpack.optimize.UglifyJsPlugin(),
+            new UglifyJSPlugin({
+                parallel: true
+            }),
             new AotPlugin({
                 tsConfigPath: './tsconfig.json',
                 entryModule: path.join(__dirname, 'ClientApp/app/app.browser.module#AppModule'),
