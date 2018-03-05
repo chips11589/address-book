@@ -18,5 +18,5 @@
 * Execute the DataAccess\SQL\CreateScripts\1.00 AddressBookCreate.sql against the newly created database
 * Correct the ConnectionStrings:DefaultConnection in the WebAPI\appsettings.json
 * Update the _baseURI in the Web\ClientApp\app\shared\utils\config.service.ts to match the applicationUrl of WebAPI project
-* Run the Web project and play around! You may want to open multiple browser sessions to see how SignalR is used
+* Run the Web project, type in some sample searching key words like "sam, wil or wel..." and play around! You may want to open multiple browser sessions to see how SignalR is used
 * This has been tested and worked well on Chrome
