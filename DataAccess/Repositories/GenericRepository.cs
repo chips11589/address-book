@@ -8,19 +8,15 @@ namespace DataAccess.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private ApplicationDbContext _dbContext;
+        public ApplicationDbContext DbContext { get; set; }
 
-        public ApplicationDbContext DbContext
+        private DbSet<TEntity> DbSet
         {
-            get { return _dbContext; }
-            set
+            get
             {
-                _dbContext = value;
-                _dbSet = _dbContext.Set<TEntity>();
+                return DbContext.Set<TEntity>();
             }
         }
-
-        private DbSet<TEntity> _dbSet;
 
         public GenericRepository(ApplicationDbContext dbContext)
         {
@@ -32,7 +28,7 @@ namespace DataAccess.Repositories
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = DbSet;
 
             if (filter != null)
             {
@@ -52,21 +48,21 @@ namespace DataAccess.Repositories
 
         public virtual Task<TEntity> GetByID(object id)
         {
-            return _dbSet.FindAsync(id);
+            return DbSet.FindAsync(id);
         }
 
         public virtual void Insert(TEntity entity)
         {
-            _dbSet.Add(entity);
+            DbSet.Add(entity);
         }
 
         public virtual void Delete(TEntity entityToDelete)
         {
             if (DbContext.Entry(entityToDelete).State == EntityState.Detached)
             {
-                _dbSet.Attach(entityToDelete);
+                DbSet.Attach(entityToDelete);
             }
-            _dbSet.Remove(entityToDelete);
+            DbSet.Remove(entityToDelete);
         }
 
         public void Refresh(TEntity obj)
@@ -77,7 +73,7 @@ namespace DataAccess.Repositories
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            _dbSet.Attach(entityToUpdate);
+            DbSet.Attach(entityToUpdate);
             DbContext.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
