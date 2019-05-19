@@ -21,4 +21,4 @@ Demo: https://app-address-book.herokuapp.com (you may have to refresh the web pa
 * Correct the ConnectionStrings:DefaultConnection in the WebAPI\appsettings.json
 * Update the _baseURI in the Web\ClientApp\app\shared\utils\config.service.ts to match the applicationUrl of WebAPI project
 * Run the Web project, type in some sample searching key words like "sam, wil or wel..." and play around! You may want to open multiple browser sessions to see how SignalR is used
-* This has been tested and worked well on Chrome
+* This app has been tested and working on Chrome, Firefox and Edge (Not IE).
