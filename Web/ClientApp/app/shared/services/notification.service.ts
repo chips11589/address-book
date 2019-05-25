@@ -22,13 +22,13 @@ export class NotificationService extends BaseService {
     constructor(private http: HttpClient, private configService: ConfigService) {
         super();
         this.baseUrl = configService.getBaseURI();
-
-        //this.hubConnection
-        //    .start()
-        //    .catch((error: any) => console.log(error));
     }
 
     public startConnection = () => {
+        if (typeof document === 'undefined') {
+            return;
+        }
+
         if (this.hubConnection && this.hubConnection.state == SignalR.HubConnectionState.Connected) {
             return;
         }
