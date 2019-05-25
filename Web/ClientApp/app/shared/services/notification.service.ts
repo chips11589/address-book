@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
-import { HubConnection, TransportType } from "@aspnet/signalr-client";
+import * as SignalR from "@aspnet/signalr";
 
 // Add the RxJS Observable operators we need in this app.
 import '../../shared/utils/rxjs-operators';
@@ -17,29 +17,36 @@ export class NotificationService extends BaseService {
     private _notificationSource = new BehaviorSubject<AppNotification[]>([]);
     notificationObservable$ = this._notificationSource.asObservable();
 
-    private notificationHub: HubConnection;
+    private hubConnection: SignalR.HubConnection | undefined;
 
     constructor(private http: HttpClient, private configService: ConfigService) {
         super();
         this.baseUrl = configService.getBaseURI();
 
-        this.notificationHub = new HubConnection(
-            this.baseUrl + '/notificationHub',
-            { transport: TransportType.WebSockets });
-
-        this.notificationHub.on(
-            "Send",
-            data => {
-                this._notificationSource.next(data);
-            });
-
-        this.notificationHub
-            .start()
-            .catch(error => console.log(error));
+        //this.hubConnection
+        //    .start()
+        //    .catch((error: any) => console.log(error));
     }
 
-    ngOnDestroy() {
-        this.notificationHub.stop();
+    public startConnection = () => {
+        if (this.hubConnection && this.hubConnection.state == SignalR.HubConnectionState.Connected) {
+            return;
+        }
+
+        this.hubConnection = new SignalR.HubConnectionBuilder()
+            .withUrl(this.baseUrl + '/notificationHub')
+            .build();
+
+        this.hubConnection
+            .start()
+            .then(() => console.log('Connection started'))
+            .catch(err => console.log('Error while starting connection: ' + err))
+
+        this.hubConnection.on(
+            "Send",
+            (data: AppNotification[]) => {
+                this._notificationSource.next(data);
+            });
     }
 }
 

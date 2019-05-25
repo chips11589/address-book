@@ -24,11 +24,17 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Need to specify origins otherwise Cors policies for Signal Core won't work
+            // https://github.com/aspnet/SignalR/issues/2110
+            var allowedOrigins = Configuration
+                .GetSection("Cors")["AllowedOrigins"]?.Split(",");
+
             // Add service and create Policy with options
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
+                    builder => builder
+                    .WithOrigins(allowedOrigins)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
@@ -64,7 +70,7 @@ namespace WebAPI
             }
 
             app.UseCors("CorsPolicy");
-            app.UseSignalR(routes => routes.MapHub<NotificationHub>("notificationHub"));
+            app.UseSignalR(routes => routes.MapHub<NotificationHub>("/notificationHub"));
 
             app.UseMvc();
         }

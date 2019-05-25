@@ -16,6 +16,6 @@ namespace WebAPI.Services.Notification
         }
 
         public async Task Push(IEnumerable<NotificationDTO> notifications) =>
-            await _context.Clients.All.InvokeAsync("Send", notifications);
+            await _context.Clients.All.SendAsync("Send", notifications);
     }
 }
