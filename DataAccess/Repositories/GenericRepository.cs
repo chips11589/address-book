@@ -43,10 +43,10 @@ namespace DataAccess.Repositories
 
         public virtual IQueryable<TEntity> GetFromSql(string sql, params object[] parameters)
         {
-            return DbContext.Set<TEntity>().FromSql(sql, parameters);
+            return DbContext.Set<TEntity>().FromSqlRaw(sql, parameters);
         }
 
-        public virtual Task<TEntity> GetByID(object id)
+        public virtual ValueTask<TEntity> GetByID(object id)
         {
             return DbSet.FindAsync(id);
         }

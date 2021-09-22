@@ -1,11 +1,11 @@
-﻿using AutoMapper;
-using DataAccess;
+﻿using DataAccess;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using WebAPI.Hubs;
 using WebAPI.Services.Contact;
 using WebAPI.Services.Notification;
@@ -50,10 +50,10 @@ namespace WebAPI
             services.AddScoped<IContactRepository>(r => new ContactRepository(dbContext, connectionString));
             services.AddScoped<IContactTagRepository, ContactTagRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.AddScoped<IContactService, ContactService>();
-            services.AddScoped<IContactTagService, ContactTagService>();
+            services.AddScoped<IContactTagService, ContactTagService>();    
             services.AddMvc();
 
             // Register SignalR
@@ -62,7 +62,7 @@ namespace WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -70,9 +70,11 @@ namespace WebAPI
             }
 
             app.UseCors("CorsPolicy");
-            app.UseSignalR(routes => routes.MapHub<NotificationHub>("/notificationHub"));
-
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<NotificationHub>("/notificationHub");
+                endpoints.MapDefaultControllerRoute();
+            });
         }
     }
 }

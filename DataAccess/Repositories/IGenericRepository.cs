@@ -13,7 +13,7 @@ namespace DataAccess.Repositories
             string includeProperties = "");
 
         ApplicationDbContext DbContext { get; set; }
-        Task<T> GetByID(object id);
+        ValueTask<T> GetByID(object id);
         IQueryable<T> GetFromSql(string sql, params object[] parameters);
         void Insert(T obj);
         void Update(T obj);
