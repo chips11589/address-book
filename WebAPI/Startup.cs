@@ -43,11 +43,9 @@ namespace WebAPI
             // Add Db context
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("DataAccess"))
+                options => options.UseSqlServer(connectionString, builder => builder.MigrationsAssembly("DataAccess"))
             );
-            var provider = services.BuildServiceProvider();
-            var dbContext = provider.GetService<ApplicationDbContext>();
-            services.AddScoped<IContactRepository>(r => new ContactRepository(dbContext, connectionString));
+            services.AddScoped<IContactRepository>(provider => new ContactRepository(provider.GetService<ApplicationDbContext>(), connectionString));
             services.AddScoped<IContactTagRepository, ContactTagRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddAutoMapper(typeof(Startup).Assembly);
@@ -69,7 +67,10 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRouting();
+
             app.UseCors("CorsPolicy");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<NotificationHub>("/notificationHub");
