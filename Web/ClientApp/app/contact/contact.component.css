@@ -7,7 +7,7 @@
     padding-right: 0;
 }
 
-::ng-deep .text-hint {
+.text-hint {
     font-size: 12px;
     padding-left: 12px;
     padding-top: 2px;

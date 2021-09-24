@@ -1,10 +1,10 @@
-::ng-deep .twitter-typeahead {
+.twitter-typeahead {
     width: 100%;
 }
 
-::ng-deep .typeahead,
-::ng-deep .tt-query,
-::ng-deep .tt-hint {
+.typeahead,
+.tt-query,
+.tt-hint {
     height: 30px;
     padding: 8px 12px;
     line-height: 30px;
@@ -15,25 +15,25 @@
     outline: none;
 }
 
-::ng-deep .typeahead {
+.typeahead {
     background-color: #fff;
 }
 
-    ::ng-deep .typeahead:focus {
+    .typeahead:focus {
         border: 2px solid #0097cf;
     }
 
-::ng-deep .tt-query {
+.tt-query {
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
-::ng-deep .tt-hint {
+.tt-hint {
     color: #999
 }
 
-::ng-deep .tt-menu {
+.tt-menu {
     width: 100%;
     margin: 6px 0;
     padding: 4px 0;
@@ -48,22 +48,22 @@
     box-shadow: 0 5px 10px rgba(0,0,0,.2);
 }
 
-::ng-deep .tt-suggestion {
+.tt-suggestion {
     padding: 3px 20px;
     line-height: 18px;
 }
 
-    ::ng-deep .tt-suggestion:hover {
+    .tt-suggestion:hover {
         cursor: pointer;
         color: #fff;
         background-color: #0097cf;
     }
 
-    ::ng-deep .tt-suggestion.tt-cursor {
+    .tt-suggestion.tt-cursor {
         color: #fff;
         background-color: #0097cf;
     }
 
-    ::ng-deep .tt-suggestion p {
+    .tt-suggestion p {
         margin: 0;
     }

@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Response, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs';
 
-// Add the RxJS Observable operators we need in this app.
-import '../../shared/utils/rxjs-operators';
 import { BaseService } from '../../shared/services/base.service';
 import { ConfigService } from '../../shared/utils/config.service';
 import { Contact } from '../models/contact.interface';
 import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ContactService extends BaseService {
@@ -37,13 +34,13 @@ export class ContactService extends BaseService {
     }
 
     getContact(id: any) {
-        return this.http.get(this.baseUrl + '/contact/getContact?id=' + id)
-            .catch(this.handleError);
+        return this.http.get<Contact>(this.baseUrl + '/contact/getContact?id=' + id)
+            .pipe(catchError(this.handleError));
     }
 
     getAutoComplete(searchQuery: string) {
         return this.http.get(this.baseUrl + '/contact/getAutoComplete?searchQuery=' + searchQuery)
-            .catch(this.handleError);
+            .pipe(catchError(this.handleError));
     }
 }
 

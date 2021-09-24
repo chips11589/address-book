@@ -1,10 +1,9 @@
-/// <reference path="../../node_modules/@types/typeahead/index.d.ts" />
+/// <reference path="../node_modules/@types/typeahead/index.d.ts" />
 /// <reference path="shared/utils/array.extension.d.ts" />
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -15,6 +14,16 @@ import { ContactSearchComponent } from './contact/contact-search/contact-search.
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 
+if (!Array.prototype.remove) {
+    Array.prototype.remove = function (o) {
+        const index: number = this.indexOf(o);
+        if (index !== -1) {
+            this.splice(index, 1);
+        }
+        return this;
+    }
+}
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -23,7 +32,6 @@ import { SharedModule } from './shared/shared.module';
     ],
     imports: [
         CommonModule,
-        HttpModule,
         FormsModule,
         ContactModule,
         HttpClientModule,

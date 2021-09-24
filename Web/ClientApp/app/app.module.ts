@@ -8,7 +8,7 @@ import 'typeahead.js';
 import './shared/utils/array.extension.js';
 
 @NgModule({
-    bootstrap: [ AppComponent ],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         AppModuleShared

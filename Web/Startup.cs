@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace Web
 {
@@ -36,6 +38,12 @@ namespace Web
                 app.UseSpaStaticFiles();
             }
 
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "ClientApp/assets")),
+                RequestPath = "/assets"
+            });
+
             app.UseRouting();
 
             app.UseSpa(spa =>
@@ -47,8 +55,6 @@ namespace Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
-            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

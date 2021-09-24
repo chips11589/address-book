@@ -11,7 +11,7 @@ import { AppNotification } from '../models/notification.interface';
 })
 export class NotificationBarComponent {
     @Input() notificationType: string;
-    @ViewChild('modal') modal: ElementRef;
+    @ViewChild('modal', { static: false }) modal: ElementRef;
 
     notifications: AppNotification[];
     private subscription : Subscription;

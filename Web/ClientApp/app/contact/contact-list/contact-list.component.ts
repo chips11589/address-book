@@ -1,6 +1,5 @@
 ﻿import { Component } from '@angular/core';
 import { ContactService } from '../services/contact.service';
-import * as $ from 'jquery';
 import { Contact, Tag } from '../models/contact.interface';
 import { Subscription } from 'rxjs';
 import { TagService } from '../services/tag.service';

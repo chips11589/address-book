@@ -1,7 +1,5 @@
 ﻿import { Component } from '@angular/core';
 import { ContactService } from '../services/contact.service';
-import { ContactAutoComplete } from '../models/contact-auto-complete.interface';
-import * as $ from 'jquery';
 import { Contact } from '../models/contact.interface';
 import { ActivatedRoute } from '@angular/router';
 

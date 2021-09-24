@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Response, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs';
 import * as SignalR from "@aspnet/signalr";
 
-// Add the RxJS Observable operators we need in this app.
-import '../../shared/utils/rxjs-operators';
 import { BaseService } from '../../shared/services/base.service';
 import { ConfigService } from '../../shared/utils/config.service';
 import { HttpClient } from '@angular/common/http';
