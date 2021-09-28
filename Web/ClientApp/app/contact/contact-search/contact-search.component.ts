@@ -1,7 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { ContactService } from '../services/contact.service';
 import { ContactAutoComplete } from '../models/contact-auto-complete.interface';
-import { Contact } from '../models/contact.interface';
 import { TagService } from '../services/tag.service';
 
 @Component({

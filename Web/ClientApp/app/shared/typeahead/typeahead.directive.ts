@@ -16,10 +16,13 @@ export class TypeaheadDirective {
     }
 
     ngAfterViewInit() {
-        var _self = this;
+        var self = this;
+        var nativeElement = this.elementRef.nativeElement;
 
-        $(this.elementRef.nativeElement).typeahead<any>({
-            minLength: 1,
+        $(nativeElement).parent().prepend('<img class="typeahead-spinner" src="/assets/images/Spinner-1s-50px.gif" />');
+
+        $(nativeElement).typeahead<any>({
+            minLength: 3,
             highlight: true,
             hint: true
         },
@@ -27,10 +30,16 @@ export class TypeaheadDirective {
                 name: 'autocomplete-dataset',
                 display: this.displayPath,
                 source: function (query, syncResults, asyncResults) {
-                    _self.getSourceCallback(query, syncResults, asyncResults);
+                    self.getSourceCallback(query, syncResults, asyncResults);
                 }
             }).on('typeahead:selected', function (e, obj, dataSet) {
-                _self.itemSelectCallback(obj, _self.displayPath)
+                self.itemSelectCallback(obj, self.displayPath)
+            }).on('typeahead:asyncrequest', function () {
+                $(nativeElement).addClass('text-hidden');
+                $('.typeahead-spinner').show();
+            }).on('typeahead:asynccancel typeahead:asyncreceive', function () {
+                $(nativeElement).removeClass('text-hidden');
+                $('.typeahead-spinner').hide();
             });
     }
 }

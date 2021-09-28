@@ -1,6 +1,6 @@
 <div #modalWrapper class="modal-wrapper">
-    <button class="btn" [ngClass]="{'btn-default': !isModalOpen, 'btn-warning': isModalOpen }">
-        <span class='glyphicon glyphicon-alert'></span>
+    <button class="btn" [ngClass]="{'btn-outline-info': !isModalOpen, 'btn-info': isModalOpen }">
+        <i class="fa fa-bell"></i>
     </button>
     <div #modal class="notification-modal list-group">
         <p *ngFor="let notification of notifications" class="list-group-item">
