@@ -5,7 +5,7 @@
   "projects": {
     "Web": {
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "",
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
@@ -25,7 +25,14 @@
               "node_modules/font-awesome/css/font-awesome.min.css",
               "app/shared/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "assets",
+                "output": "assets"
+              }
+            ]
           },
           "configurations": {
             "production": {
@@ -64,22 +71,22 @@
             "browserTarget": "Web:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "styles": [ "src/styles.css" ],
-            "scripts": [],
-            "assets": [ "assets" ]
-          }
-        },
+        //"test": {
+        //  "builder": "@angular-devkit/build-angular:karma",
+        //  "options": {
+        //    "main": "src/test.ts",
+        //    "polyfills": "src/polyfills.ts",
+        //    "tsConfig": "src/tsconfig.spec.json",
+        //    "karmaConfig": "src/karma.conf.js",
+        //    "styles": [ "src/styles.css" ],
+        //    "scripts": [],
+        //    "assets": [ "assets" ]
+        //  }
+        //},
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [ "tsconfig.app.json", "src/tsconfig.spec.json" ],
+            "tsConfig": [ "tsconfig.app.json", "tsconfig.spec.json" ],
             "exclude": [ "**/node_modules/**" ]
           }
         },
@@ -88,7 +95,7 @@
           "options": {
             "outputPath": "dist-server",
             "main": "main.ts",
-            "tsConfig": "src/tsconfig.server.json"
+            "tsConfig": "tsconfig.server.json"
           },
           "configurations": {
             "dev": {

@@ -10,9 +10,17 @@ export class TypeaheadDirective {
     @Input() itemSelectCallback: any;
 
     elementRef: ElementRef;
+    readonly inputDelay: number = 200;
+    timeOut: any;
 
     constructor(el: ElementRef) {
         this.elementRef = el;
+    }
+
+    private resetTimeout = () => {
+        if (this.timeOut) {
+            clearTimeout(this.timeOut);
+        }
     }
 
     ngAfterViewInit() {
@@ -22,7 +30,7 @@ export class TypeaheadDirective {
         $(nativeElement).parent().prepend('<img class="typeahead-spinner" src="/assets/images/Spinner-1s-50px.gif" />');
 
         $(nativeElement).typeahead<any>({
-            minLength: 3,
+            minLength: 1,
             highlight: true,
             hint: true
         },
@@ -35,11 +43,15 @@ export class TypeaheadDirective {
             }).on('typeahead:selected', function (e, obj, dataSet) {
                 self.itemSelectCallback(obj, self.displayPath)
             }).on('typeahead:asyncrequest', function () {
-                $(nativeElement).addClass('text-hidden');
-                $('.typeahead-spinner').show();
+                self.resetTimeout();
+                self.timeOut = setTimeout(() => {
+                    $(nativeElement).addClass('text-hidden');
+                    $('.typeahead-spinner').show();
+                }, self.inputDelay);
             }).on('typeahead:asynccancel typeahead:asyncreceive', function () {
+                self.resetTimeout();
                 $(nativeElement).removeClass('text-hidden');
                 $('.typeahead-spinner').hide();
-            });
+            }.bind(this));
     }
 }

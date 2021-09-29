@@ -13,13 +13,7 @@ import './shared/utils/array.extension.js';
         BrowserModule,
         AppModuleShared
     ],
-    providers: [
-        { provide: 'BASE_URL', useFactory: getBaseUrl }
-    ]
+    providers: []
 })
-export class AppModule {
-}
 
-export function getBaseUrl() {
-    return document.getElementsByTagName('base')[0].href;
-}
+export class AppModule { }

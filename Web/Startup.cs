@@ -23,6 +23,11 @@ namespace Web
         {
             services.AddRazorPages();
             services.AddDataProtection();
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,18 +36,24 @@ namespace Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "ClientApp/assets")),
+                    RequestPath = "/assets"
+                });
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 app.UseSpaStaticFiles();
-            }
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "ClientApp/assets")),
-                RequestPath = "/assets"
-            });
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "ClientApp/dist/assets")),
+                    RequestPath = "/assets"
+                });
+            }
 
             app.UseRouting();
 
@@ -58,9 +69,7 @@ namespace Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapFallbackToController("Index", "Home");
+                endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}");
             });
         }
     }
