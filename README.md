@@ -1,6 +1,6 @@
 # README #
 
-Demo: https://app-address-book.herokuapp.com (you may have to refresh the web page twice and wait for the website to load as it is hosted on free tier of heroku)
+Demo: https://app-address-book-eu.herokuapp.com (you may have to refresh the web page twice and wait for the website to load as it is hosted on free tier of heroku)
 
 ### What is this repository for? ###
 
