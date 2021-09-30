@@ -4,18 +4,18 @@ Demo: https://app-address-book.herokuapp.com (you may have to refresh the web pa
 
 ### What is this repository for? ###
 
-* This is a simple Address Book using ASP.NET Core 2.2, SignalR Core 1.1.0 and AngularJs 4.4.6
+* This is a simple Address Book using ASP.NET Core 3.0, SignalR Core 3.0 and AngularJs 8.2.12
 * Full-text search - FREETEXT predicate is used to generate the autocomplete suggestions for the search box (https://docs.microsoft.com/en-us/sql/t-sql/queries/freetext-transact-sql)
-* ASP.NET Core 2.2 provides back-end Web API, with CORS enabled
+* ASP.NET Core 3.0 provides back-end Web API, with CORS enabled
 * SignalR Core provides Tag CRUD notification and tag-list synchronisation among user sessions
-* AngularJs 4.4.6 provides front-end templating. Front-end project utilises modular structure, components and directives in order to maximise the code reusability and logical separation
+* AngularJs 8.2.12 provides front-end templating. Front-end project utilises modular structure, components and directives in order to maximise the code reusability and logical separation
 * RxJs Observables / Subjects are widely used in order to facilitate communication among app components
 * Automapper is used to map objects from Entity to DTO and vice versa
 * Dapper is used for some frequently called database requests in order to slightly improve performance and flexibly map query results to custom objects. Note that Entity Framework Core also supports custom object mapping, however, the custom object type needs to be explicitly declared as a DbSet of the DbContext, which is not desirable in this case.
 
 ### How do I get set up? ###
 
-* Precondition: .NET Core 2.2, SQL Server (with Full-Text Search enabled) and NodeJs have been installed on the server(s)
+* Precondition: .NET Core 3.0, SQL Server (with Full-Text Search enabled) and NodeJs have been installed on the server(s)
 * Create a blank database, i.e. AddressBook
 * Execute the DataAccess\SQL\CreateScripts\1.00 AddressBookCreate.sql against the newly created database
 * Correct the ConnectionStrings:DefaultConnection in the WebAPI\appsettings.json
