@@ -15,7 +15,6 @@ namespace WebAPI.Services.Notification
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task Push(IEnumerable<NotificationDTO> notifications) =>
-            await _context.Clients.All.SendAsync("Send", notifications);
+        public Task Push(IEnumerable<NotificationDTO> notifications) => _context.Clients.All.SendAsync("Send", notifications);
     }
 }

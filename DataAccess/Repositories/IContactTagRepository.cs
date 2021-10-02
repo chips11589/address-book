@@ -9,8 +9,8 @@ namespace DataAccess.Repositories
     public interface IContactTagRepository : IGenericRepository<ContactTag>
     {
         IQueryable<Tuple<Guid, Tag>> GetByContactIds(IEnumerable<Guid> contactIds);
-        Task DeleteByContactId(Guid contactId);
-        Task DeleteByTagId(Guid tagId);
-        Task InsertContactTags(IEnumerable<ContactTag> contactTags);
+        void DeleteByContactId(Guid contactId);
+        void DeleteByTagId(Guid tagId);
+        Task InsertContactTagsAsync(IEnumerable<ContactTag> contactTags);
     }
 }

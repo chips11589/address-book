@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using DataAccess.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Data;
 
@@ -8,12 +9,12 @@ namespace DataAccess.Repositories
 {
     public class ContactRepository : GenericRepository<Contact>, IContactRepository
     {
-        private string _connectionString { get; set; }
+        private readonly string _connectionString;
 
-        public ContactRepository(ApplicationDbContext dbContext, string connectionString)
+        public ContactRepository(ApplicationDbContext dbContext)
             : base(dbContext)
         {
-            _connectionString = connectionString;
+            _connectionString = dbContext.Database.GetDbConnection().ConnectionString;
         }
 
         public IEnumerable<Contact> Get(string searchQuery)

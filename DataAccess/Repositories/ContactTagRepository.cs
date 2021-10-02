@@ -19,23 +19,23 @@ namespace DataAccess.Repositories
                 .Select(r => new Tuple<Guid, Tag>(r.ContactId, r.Tag));
         }
 
-        public async Task DeleteByContactId(Guid contactId)
+        public void DeleteByContactId(Guid contactId)
         {
             var contactTags = DbContext.ContactTags.Where(r => r.ContactId == contactId);
 
             DbContext.ContactTags.RemoveRange(contactTags);
         }
 
-        public async Task DeleteByTagId(Guid tagId)
+        public void DeleteByTagId(Guid tagId)
         {
             var contactTags = DbContext.ContactTags.Where(r => r.TagId == tagId);
 
             DbContext.ContactTags.RemoveRange(contactTags);
         }
 
-        public async Task InsertContactTags(IEnumerable<ContactTag> contactTags)
+        public Task InsertContactTagsAsync(IEnumerable<ContactTag> contactTags)
         {
-            await DbContext.ContactTags.AddRangeAsync(contactTags);
+            return DbContext.ContactTags.AddRangeAsync(contactTags);
         }
     }
 }

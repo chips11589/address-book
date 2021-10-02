@@ -26,12 +26,12 @@ namespace WebAPI.Services.Contact
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<TagDTO>> GetTags()
+        public Task<IEnumerable<TagDTO>> GetTags()
         {
             var tags = _tagRepository.Get().ToList();
             var tagDtos = tags.Select(r => _mapper.Map<TagDTO>(r));
 
-            return tagDtos;
+            return Task.FromResult(tagDtos);
         }
 
         public async Task CreateTag(TagDTO tag)
@@ -72,7 +72,7 @@ namespace WebAPI.Services.Contact
 
         public async Task RemoveTag(TagDTO tag)
         {
-            await _contactTagRepository.DeleteByTagId(tag.Id);
+            _contactTagRepository.DeleteByTagId(tag.Id);
 
             var tagEntity = _mapper.Map<Tag>(tag);
             _tagRepository.Delete(tagEntity);
@@ -91,7 +91,7 @@ namespace WebAPI.Services.Contact
 
         public async Task UpdateContactTags(ContactDTO contact)
         {
-            await _contactTagRepository.DeleteByContactId(contact.Id);
+            _contactTagRepository.DeleteByContactId(contact.Id);
 
             var contactTags = new List<ContactTag>();
             foreach(var tag in contact.Tags)
@@ -102,7 +102,7 @@ namespace WebAPI.Services.Contact
                     TagId = tag.Id
                 });
             }
-            await _contactTagRepository.InsertContactTags(contactTags);
+            await _contactTagRepository.InsertContactTagsAsync(contactTags);
 
             await _contactTagRepository.DbContext.SaveChangesAsync();
         }

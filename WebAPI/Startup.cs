@@ -45,7 +45,7 @@ namespace WebAPI
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(connectionString, builder => builder.MigrationsAssembly("DataAccess"))
             );
-            services.AddScoped<IContactRepository>(provider => new ContactRepository(provider.GetService<ApplicationDbContext>(), connectionString));
+            services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IContactTagRepository, ContactTagRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddAutoMapper(typeof(Startup).Assembly);
