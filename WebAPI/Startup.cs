@@ -1,13 +1,13 @@
-﻿using DataAccess;
-using DataAccess.Repositories;
+﻿using Application;
+using FluentValidation.AspNetCore;
+using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebAPI.Filters;
 using WebAPI.Hubs;
-using WebAPI.Services.Contact;
 using WebAPI.Services.Notification;
 
 namespace WebAPI
@@ -24,12 +24,14 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication();
+            services.AddInfrastructure(Configuration);
+
             // Need to specify origins otherwise Cors policies for Signal Core won't work
             // https://github.com/aspnet/SignalR/issues/2110
             var allowedOrigins = Configuration
                 .GetSection("Cors")["AllowedOrigins"]?.Split(",");
 
-            // Add service and create Policy with options
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -40,19 +42,8 @@ namespace WebAPI
                     .AllowCredentials());
             });
 
-            // Add Db context
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(connectionString, builder => builder.MigrationsAssembly("DataAccess"))
-            );
-            services.AddScoped<IContactRepository, ContactRepository>();
-            services.AddScoped<IContactTagRepository, ContactTagRepository>();
-            services.AddScoped<ITagRepository, TagRepository>();
-            services.AddAutoMapper(typeof(Startup).Assembly);
-
-            services.AddScoped<IContactService, ContactService>();
-            services.AddScoped<IContactTagService, ContactTagService>();    
-            services.AddMvc();
+            services.AddMvc(options => options.Filters.Add<ApiExceptionFilterAttribute>())
+                .AddFluentValidation(configuration => configuration.AutomaticValidationEnabled = false);
 
             // Register SignalR
             services.AddSignalR();

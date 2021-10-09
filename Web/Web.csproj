@@ -18,7 +18,6 @@
     <None Remove="ClientApp\app\contact\contact.component.ts" />
     <None Remove="ClientApp\app\contact\contact.routing.ts" />
     <None Remove="ClientApp\app\contact\models\contact-auto-complete.interface.ts" />
-    <None Remove="ClientApp\app\contact\models\contact.interface.ts" />
     <None Remove="ClientApp\app\shared\models\notification.interface.ts" />
   </ItemGroup>
 
@@ -34,8 +33,10 @@
     <TypeScriptCompile Include="ClientApp\app\contact\contact-tag-list\contact-tag-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\contact\contact.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\contact\contact.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\app\contact\models\commands.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\app\contact\models\queries.interface.ts" />
     <TypeScriptCompile Include="ClientApp\app\contact\models\contact-auto-complete.interface.ts" />
-    <TypeScriptCompile Include="ClientApp\app\contact\models\contact.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\app\contact\models\entities.interface.ts" />
     <TypeScriptCompile Include="ClientApp\app\shared\models\notification.interface.ts" />
   </ItemGroup>
 
@@ -44,6 +45,11 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\app\contact\models\commands.interface.ts" />
+    <None Remove="ClientApp\app\contact\models\queries.interface.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

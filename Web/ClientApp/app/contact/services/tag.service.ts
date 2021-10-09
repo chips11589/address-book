@@ -1,10 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { catchError } from 'rxjs/operators';
 import { BaseService } from '../../shared/services/base.service';
 import { ConfigService } from '../../shared/utils/config.service';
-import { HttpClient } from '@angular/common/http';
-import { Tag, Contact } from '../models/contact.interface';
-import { catchError } from 'rxjs/operators';
+import { CreateTagCommand, DeleteTagCommand, UpdateContactTagsCommand, UpdateTagCommand } from '../models/commands.interface';
+import { Tag } from '../models/entities.interface';
+
 
 @Injectable()
 export class TagService extends BaseService {
@@ -22,23 +23,23 @@ export class TagService extends BaseService {
             .pipe(catchError(this.handleError))
     }
 
-    updateTag(tag: Tag) {
-        return this.http.put(this.baseUrl + '/tag', tag)
+    updateTag(command: UpdateTagCommand) {
+        return this.http.put(this.baseUrl + '/tag', command)
             .pipe(catchError(this.handleError));
     }
 
-    removeTag(tag: Tag) {
-        return this.http.delete(this.baseUrl + '/tag?tagId=' + tag.id + '&tagName=' + tag.name)
+    removeTag(id: string) {
+        return this.http.delete(this.baseUrl + '/tag?id=' + id)
             .pipe(catchError(this.handleError));
     }
 
-    insertTag(tag: Tag) {
-        return this.http.post<Tag>(this.baseUrl + '/tag', tag)
+    insertTag(command: CreateTagCommand) {
+        return this.http.post<string>(this.baseUrl + '/tag', command)
             .pipe(catchError(this.handleError));
     }
 
-    updateContactTags(contact: Contact) {
-        return this.http.post(this.baseUrl + '/tag/updateContactTags', contact)
+    updateContactTags(command: UpdateContactTagsCommand) {
+        return this.http.post(this.baseUrl + '/tag/updateContactTags', command)
             .pipe(catchError(this.handleError));
     }
 }

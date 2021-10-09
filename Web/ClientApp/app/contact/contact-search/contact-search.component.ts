@@ -54,7 +54,9 @@ export class ContactSearchComponent {
 
         // throttling request by setTimeout function.
         this.timer = setTimeout(function () {
-            _self.contactService.getAutoComplete(query)
+            _self.contactService.getAutoComplete({
+                searchQuery: query
+            })
                 .subscribe(result => {
                     if (typeof asyncResults !== 'undefined') {
                         asyncResults(result);
@@ -72,10 +74,9 @@ export class ContactSearchComponent {
     }
 
     searchContact() {
-        if (this.searchQuery.indexOf('#') === 0) {
-            this.contactService.searchContactByTag(this.searchId);
-        } else {
-            this.contactService.searchContact(this.searchQuery);
-        }
+        this.contactService.searchContact({
+            searchQuery: this.searchQuery,
+            tagId: this.searchId
+        });
     }
 }

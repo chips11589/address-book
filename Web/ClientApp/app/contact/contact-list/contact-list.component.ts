@@ -1,6 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { ContactService } from '../services/contact.service';
-import { Contact, Tag } from '../models/contact.interface';
+import { Contact, Tag } from '../models/entities.interface';
 import { Subscription } from 'rxjs';
 import { TagService } from '../services/tag.service';
 import { NotificationService } from '../../shared/services/notification.service';

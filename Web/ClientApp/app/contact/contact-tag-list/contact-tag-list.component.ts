@@ -1,7 +1,6 @@
-﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ContactService } from '../services/contact.service';
-import { Contact, Tag } from '../models/contact.interface';
+﻿import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Contact, Tag } from '../models/entities.interface';
 import { TagService } from '../services/tag.service';
 
 @Component({
@@ -17,7 +16,7 @@ export class ContactTagListComponent {
     newTagName: string;
     subscription: Subscription;
 
-    constructor(private contactService: ContactService, private tagService: TagService) { }
+    constructor(private tagService: TagService) { }
 
     ngOnInit() {
         
@@ -55,11 +54,12 @@ export class ContactTagListComponent {
             return;
         }
 
-        var newTag = { name: this.newTagName };
-        this.tagService.insertTag(newTag).subscribe((tag) => {
-            var addedGlobalTag = this.allTags.find(globalTag => globalTag.id === tag.id);
-            if (typeof addedGlobalTag === 'undefined') {
-                this.allTags.push(tag);
+        var newTag: Tag = { name: this.newTagName };
+        this.tagService.insertTag(newTag).subscribe((id) => {
+            var existingTag = this.allTags.find(globalTag => globalTag.id === id);
+            if (typeof existingTag === 'undefined') {
+                newTag.id = id;
+                this.allTags.push(newTag);
             }
         });
         this.newTagName = '';

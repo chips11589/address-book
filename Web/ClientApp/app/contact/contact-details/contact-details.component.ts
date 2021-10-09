@@ -1,6 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { ContactService } from '../services/contact.service';
-import { Contact } from '../models/contact.interface';
+import { Contact } from '../models/entities.interface';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

@@ -26,4 +26,10 @@ export abstract class BaseService {
         modelStateErrors = modelStateErrors = '' ? null : modelStateErrors;
         return Observable.throw(modelStateErrors || 'Server error');
     }
+
+    protected getQueryString(queryObj: any) {
+        return Object.keys(queryObj).map(function (key) {
+            return key + '=' + queryObj[key]
+        }).join('&');
+    }
 }

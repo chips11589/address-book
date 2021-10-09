@@ -1,64 +1,52 @@
-﻿using System;
+﻿using Application.Tags;
+using Application.Tags.Commands.CreateTag;
+using Application.Tags.Commands.DeleteTag;
+using Application.Tags.Commands.UpdateContactTags;
+using Application.Tags.Commands.UpdateTag;
+using Application.Tags.Queries.GetTag;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using WebAPI.Services.Contact;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    public class TagController : Controller
+    public class TagController : ApiControllerBase
     {
-        private readonly IContactTagService _contactTagService;
-
-        public TagController(IContactTagService contactTagService)
-        {
-            _contactTagService = contactTagService ?? throw new ArgumentNullException(nameof(contactTagService));
-        }
-
         [HttpPost("[action]")]
-        public async Task<IActionResult> UpdateContactTags([FromBody]ContactDTO contact)
+        public async Task<ActionResult> UpdateContactTags(UpdateContactTagsCommand command)
         {
-            await _contactTagService.UpdateContactTags(contact);
+            await Sender.Send(command);
 
-            return Json(Ok());
+            return NoContent();
         }
 
-        // GET: api/<controller>
         [HttpGet]
-        public async Task<IEnumerable<TagDTO>> Get() =>
-            await _contactTagService.GetTags();
+        public async Task<ActionResult<List<TagDto>>> Get()
+        {
+            return await Sender.Send(new GetTagsQuery());
+        }
 
-        // POST api/<controller>
         [HttpPost]
-        public async Task<TagDTO> Post([FromBody]TagDTO tag)
+        public async Task<ActionResult<Guid>> Post(CreateTagCommand command)
         {
-            await _contactTagService.CreateTag(tag);
-            return tag;
+            return await Sender.Send(command);
         }
 
-        // PUT api/<controller>
         [HttpPut]
-        public async Task<TagDTO> Put([FromBody]TagDTO tag)
+        public async Task<ActionResult> Put(UpdateTagCommand command)
         {
-            await _contactTagService.UpdateTag(tag);
-            return tag;
+            await Sender.Send(command);
+
+            return NoContent();
         }
 
-        // DELETE api/<controller>
-        [HttpDelete]
-        public async Task<IActionResult> Delete(Guid tagId, string tagName)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(Guid id)
         {
-            var tag = new TagDTO
-            {
-                Id = tagId,
-                Name = tagName
-            };
-            await _contactTagService.RemoveTag(tag);
+            await Sender.Send(new DeleteTagCommand { Id = id });
 
-            return Json(Ok());
+            return NoContent();
         }
     }
 }

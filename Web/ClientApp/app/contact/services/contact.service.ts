@@ -3,9 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 
 import { BaseService } from '../../shared/services/base.service';
 import { ConfigService } from '../../shared/utils/config.service';
-import { Contact } from '../models/contact.interface';
+import { Contact } from '../models/entities.interface';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { GetContactAutoCompleteQuery, GetContactsQuery } from '../models/queries.interface';
 
 @Injectable()
 export class ContactService extends BaseService {
@@ -19,27 +20,20 @@ export class ContactService extends BaseService {
         this.baseUrl = configService.getApiURI();
     }
 
-    searchContact(searchQuery: string) {
-        return this.http.get(this.baseUrl + '/contact?searchQuery=' + searchQuery)
-            .subscribe(result => {
-                this._contactSource.next(result as Contact[]);
-            }, this.handleError);
-    }
-
-    searchContactByTag(tagId: any   ) {
-        return this.http.get(this.baseUrl + '/contact/getContactsByTag?tagId=' + tagId)
+    searchContact(query: GetContactsQuery) {
+        return this.http.get(this.baseUrl + '/contact?' + this.getQueryString(query))
             .subscribe(result => {
                 this._contactSource.next(result as Contact[]);
             }, this.handleError);
     }
 
     getContact(id: any) {
-        return this.http.get<Contact>(this.baseUrl + '/contact/getContact?id=' + id)
+        return this.http.get<Contact>(this.baseUrl + '/contact/' + id)
             .pipe(catchError(this.handleError));
     }
 
-    getAutoComplete(searchQuery: string) {
-        return this.http.get(this.baseUrl + '/contact/getAutoComplete?searchQuery=' + searchQuery)
+    getAutoComplete(query: GetContactAutoCompleteQuery) {
+        return this.http.get(this.baseUrl + '/contact/getAutoComplete?searchQuery=' + this.getQueryString(query))
             .pipe(catchError(this.handleError));
     }
 }
