@@ -4,7 +4,8 @@ Demo: https://app-address-book-eu.herokuapp.com (you may have to refresh the web
 
 ### What is this repository for? ###
 
-* This is a simple Address Book using ASP.NET Core 3.0, SignalR Core 3.0 and AngularJs 8.2.12
+* This is a simple Address Book using ASP.NET Core 3.1, SignalR Core 3.1 and AngularJs 8.2.12
+* Solution structure follows Clean Architecture (https://github.com/jasontaylordev/CleanArchitecture), with CQRS + MediatR
 * Full-text search - FREETEXT predicate is used to generate the autocomplete suggestions for the search box (https://docs.microsoft.com/en-us/sql/t-sql/queries/freetext-transact-sql)
 * ASP.NET Core 3.0 provides back-end Web API, with CORS enabled
 * SignalR Core provides Tag CRUD notification and tag-list synchronisation among user sessions
