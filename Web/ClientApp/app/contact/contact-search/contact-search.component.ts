@@ -76,7 +76,7 @@ export class ContactSearchComponent {
     searchContact() {
         this.contactService.searchContact({
             searchQuery: this.searchQuery,
-            tagId: this.searchId
+            tagId: this.searchId || ''
         });
     }
 }

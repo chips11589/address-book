@@ -43,7 +43,7 @@ export class ContactTagListComponent {
     }
 
     completeEdit(tag: Tag) {
-        this.tagService.updateTag(tag).subscribe(() => {
+        this.tagService.updateTag({ tag: tag }).subscribe(() => {
             this.onTagEdited.emit(tag);
             tag.isEditing = false;
         });
@@ -55,7 +55,7 @@ export class ContactTagListComponent {
         }
 
         var newTag: Tag = { name: this.newTagName };
-        this.tagService.insertTag(newTag).subscribe((id) => {
+        this.tagService.insertTag({ tag: newTag }).subscribe((id) => {
             var existingTag = this.allTags.find(globalTag => globalTag.id === id);
             if (typeof existingTag === 'undefined') {
                 newTag.id = id;
@@ -67,7 +67,7 @@ export class ContactTagListComponent {
 
     deleteTag(tag: Tag) {
         if (confirm('Are you sure you want to delete this record?')) {
-            this.tagService.removeTag(tag).subscribe(() => {
+            this.tagService.removeTag(tag.id).subscribe(() => {
                 this.allTags.remove(tag);
                 this.onTagRemoved.emit(tag);
             });

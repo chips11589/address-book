@@ -30,5 +30,11 @@ namespace Infrastructure.Persistence.Dapper
         {
             return _connection.QueryAsync<TResult>(sql, param);
         }
+
+        public Task<IEnumerable<TReturn>> QueryAsync<TFirst, TSecond, TReturn>(string sql,
+            Func<TFirst, TSecond, TReturn> map, object param = null)
+        {
+            return _connection.QueryAsync(sql, map, param);
+        }
     }
 }

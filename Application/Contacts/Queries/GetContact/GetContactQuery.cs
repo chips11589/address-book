@@ -27,6 +27,11 @@ namespace Application.Contacts.Queries.GetContact
         public async Task<ContactDto> Handle(GetContactQuery request, CancellationToken cancellationToken)
         {
             var contact = await _context.Contacts.FirstOrDefaultAsync(contact => contact.Id == request.Id);
+
+            if (contact == null)
+            {
+                throw new Exception(); // TODO: Change to not found exception
+            }
             return _mapper.Map<ContactDto>(contact);
         }
     }

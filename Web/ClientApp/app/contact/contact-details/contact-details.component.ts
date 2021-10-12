@@ -17,10 +17,12 @@ export class ContactDetailsComponent {
         this.route.params.subscribe(params => {
             var id = params['id']; // (+) converts string 'id' to a number
 
-            this.contactService.getContact(id)
-                .subscribe(contact => {
-                    this.contact = contact;
-                });
+            if (typeof id !== 'undefined') {
+                this.contactService.getContact(id)
+                    .subscribe(contact => {
+                        this.contact = contact;
+                    });
+            }
         });
     }
 }

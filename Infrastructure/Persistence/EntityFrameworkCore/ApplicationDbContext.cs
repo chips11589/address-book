@@ -3,6 +3,7 @@ using Domain.Entities;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Infrastructure.Persistence.EntityFrameworkCore
 {
@@ -11,6 +12,11 @@ namespace Infrastructure.Persistence.EntityFrameworkCore
         public ApplicationDbContext(DbContextOptions options)
             : base(options)
         {
+        }
+
+        public IDbContextTransaction BeginTransaction()
+        {
+            return Database.BeginTransaction();
         }
 
         public DbSet<Contact> Contacts { get; set; }

@@ -83,7 +83,7 @@ export class ContactListComponent {
         }
 
         // update new tags for selected contact
-        this.tagService.updateContactTags(contact).subscribe();
+        this.tagService.updateContactTags({ contactId: contact.id, tags: contact.tags }).subscribe();
     }
 
     selectItem(contact: Contact) {

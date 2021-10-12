@@ -33,7 +33,7 @@ export class ContactService extends BaseService {
     }
 
     getAutoComplete(query: GetContactAutoCompleteQuery) {
-        return this.http.get(this.baseUrl + '/contact/getAutoComplete?searchQuery=' + this.getQueryString(query))
+        return this.http.get(this.baseUrl + '/contact/getAutoComplete?' + this.getQueryString(query))
             .pipe(catchError(this.handleError));
     }
 }

@@ -31,14 +31,24 @@ namespace Application.Tags.Commands.UpdateContactTags
 
         public async Task<Unit> Handle(UpdateContactTagsCommand request, CancellationToken cancellationToken)
         {
-            var contact = await _context.Contacts.FirstOrDefaultAsync(contact => contact.Id == request.ContactId);
-            var tags = request.Tags.AsQueryable().ProjectTo<Tag>(_mapper.ConfigurationProvider);
+            var contact = await _context.Contacts.Include(contact => contact.Tags)
+                    .FirstOrDefaultAsync(contact => contact.Id == request.ContactId);
+            var newTags = request.Tags.AsQueryable().ProjectTo<Tag>(_mapper.ConfigurationProvider);
 
-            foreach (var tag in tags)
+            foreach (var tag in contact.Tags.ToList())
             {
-                contact.Tags.Add(tag);
+                if (!newTags.Any(newTag => newTag.Id == tag.Id))
+                {
+                    contact.Tags.Remove(tag);
+                }
             }
-
+            foreach (var tag in newTags)
+            {
+                if (!contact.Tags.Any(existingTag => existingTag.Id == tag.Id))
+                {
+                    contact.Tags.Add(tag);
+                }
+            }
             await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

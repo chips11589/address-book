@@ -12,8 +12,7 @@ namespace Application.Tags
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap(typeof(Tag), GetType())
-                .ReverseMap().ForMember(nameof(Id), option => option.Ignore());
+            profile.CreateMap(typeof(Tag), GetType()).ReverseMap();
         }
     }
 }

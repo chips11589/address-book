@@ -1,12 +1,14 @@
 ﻿using Application.Common.Mappings;
 using Application.Tags;
 using Domain.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Application.Contacts
 {
     public class ContactDto : IMapFrom<Contact>
     {
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string CompanyName { get; set; }
         public string FirstName { get; set; }

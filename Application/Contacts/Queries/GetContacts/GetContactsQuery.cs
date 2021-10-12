@@ -15,7 +15,7 @@ namespace Application.Contacts.Queries.GetContacts
     public class GetContactsQuery : IRequest<List<ContactDto>>
     {
         public string SearchQuery { get; set; }
-        public Guid TagId { get; set; }
+        public Guid? TagId { get; set; }
     }
 
     public class GetContactsQueryHandler : IRequestHandler<GetContactsQuery, List<ContactDto>>
@@ -33,7 +33,7 @@ namespace Application.Contacts.Queries.GetContacts
 
         public async Task<List<ContactDto>> Handle(GetContactsQuery request, CancellationToken cancellationToken)
         {
-            List<Contact> results;
+            List<Contact> results = new List<Contact>();
 
             if (request.TagId != default)
             {
@@ -42,14 +42,26 @@ namespace Application.Contacts.Queries.GetContacts
             }
             else if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
-                results = (await _readDbConnection
-                    .QueryAsync<Contact>("EXECUTE dbo.GetContacts @searchQuery", new { searchQuery = request.SearchQuery }))
-                    .ToList();
-            }
-            else
-            {
-                // TODO: Change to BadRequestException
-                throw new Exception();
+                var contacts = new Dictionary<Guid, Contact>();
+                await _readDbConnection
+                    .QueryAsync<Contact, Tag, Contact>("EXECUTE dbo.GetContacts @searchQuery", (contact, tag) =>
+                    {
+                        Contact contactEntity = contact;
+
+                        if (!contacts.TryGetValue(contact.Id, out contactEntity))
+                        {
+                            contacts.Add(contact.Id, contact);
+                            contactEntity = contact;
+                        }
+
+                        if (tag != null)
+                        {
+                            contactEntity.Tags.Add(tag);
+                        }
+                        return contactEntity;
+                    }, new { searchQuery = request.SearchQuery });
+
+                results = contacts.Values.ToList();
             }
 
             return results.AsQueryable().ProjectTo<ContactDto>(_mapper.ConfigurationProvider)

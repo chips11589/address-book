@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<ActionResult<List<ContactAutoCompleteDto>>> GetAutoComplete(GetContactAutoCompleteQuery query)
+        public async Task<ActionResult<List<ContactAutoCompleteDto>>> GetAutoComplete([FromQuery] GetContactAutoCompleteQuery query)
         {
             return await Sender.Send(query);
         }
