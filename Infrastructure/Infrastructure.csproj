@@ -8,14 +8,12 @@
     <None Remove="SQL\SchemaObjects\Schema_1_0\Indexes\ContactFullTextIndex.sql" />
     <None Remove="SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContactAutocomplete.sql" />
     <None Remove="SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContacts.sql" />
-    <None Remove="SQL\TestData\CreateContacts.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="SQL\SchemaObjects\Schema_1_0\Indexes\ContactFullTextIndex.sql" />
     <EmbeddedResource Include="SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContactAutocomplete.sql" />
     <EmbeddedResource Include="SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContacts.sql" />
-    <EmbeddedResource Include="SQL\TestData\CreateContacts.sql" />
   </ItemGroup>
 
   <ItemGroup>

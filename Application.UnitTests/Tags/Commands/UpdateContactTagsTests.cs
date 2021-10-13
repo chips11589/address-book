@@ -58,7 +58,6 @@ namespace Application.UnitTests.Tags.Commands
             Assert.AreEqual(3, contactEntity.Tags.Count);
             Assert.AreEqual(newTags[0].Id, contactEntity.Tags[0].Id);
 
-
             await mediator.Send(new UpdateContactTagsCommand
             {
                 ContactId = contacts[0].Id,
@@ -71,7 +70,6 @@ namespace Application.UnitTests.Tags.Commands
             Assert.AreEqual(2, contactEntity.Tags.Count);
             Assert.AreEqual(newTags[1].Id, contactEntity.Tags[0].Id);
             Assert.AreEqual(newTags[2].Id, contactEntity.Tags[1].Id);
-
 
             await mediator.Send(new UpdateContactTagsCommand
             {
