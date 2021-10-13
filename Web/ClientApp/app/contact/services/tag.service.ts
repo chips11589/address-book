@@ -29,7 +29,7 @@ export class TagService extends BaseService {
     }
 
     removeTag(id: string) {
-        return this.http.delete(this.baseUrl + '/tag?id=' + id)
+        return this.http.delete(this.baseUrl + '/tag/' + id)
             .pipe(catchError(this.handleError));
     }
 
