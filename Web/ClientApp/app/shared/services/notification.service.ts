@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import * as SignalR from "@aspnet/signalr";
+import * as SignalR from "@microsoft/signalr";
 
 import { BaseService } from '../../shared/services/base.service';
 import { ConfigService } from '../../shared/utils/config.service';
@@ -31,6 +31,7 @@ export class NotificationService extends BaseService {
 
         this.hubConnection = new SignalR.HubConnectionBuilder()
             .withUrl(this.baseUrl + '/notificationHub')
+            .withAutomaticReconnect()
             .build();
 
         this.hubConnection
