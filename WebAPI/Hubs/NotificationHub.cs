@@ -1,18 +1,18 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Application.Notifications;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;
-using WebAPI.Services.Notification;
 
 namespace WebAPI.Hubs
 {
-    public sealed class NotificationHub : Hub<INotificationHub>
+    public sealed class NotificationHub : Hub<INotificationClient>
     {
-        public async Task Send(NotificationDTO notification)
+        public async Task NotifyTagChanged(TagChangedNotificationDto notification)
         {
             if (notification == null)
                 throw new ArgumentNullException(nameof(notification));
 
-            await Clients.All.Send(notification);
+            await Clients.All.HandleTagChanged(notification);
         }
     }
 }

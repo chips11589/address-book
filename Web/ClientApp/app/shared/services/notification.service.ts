@@ -5,17 +5,17 @@ import * as SignalR from "@aspnet/signalr";
 import { BaseService } from '../../shared/services/base.service';
 import { ConfigService } from '../../shared/utils/config.service';
 import { HttpClient } from '@angular/common/http';
-import { AppNotification } from '../models/notification.interface';
+import { TagChangedNotification } from '../models/notification.interface';
 
 @Injectable()
 export class NotificationService extends BaseService {
     baseUrl: string = '';
-    private _notificationSource = new BehaviorSubject<AppNotification[]>([]);
+    private _notificationSource = new BehaviorSubject<TagChangedNotification>(null);
     notificationObservable$ = this._notificationSource.asObservable();
 
     private hubConnection: SignalR.HubConnection | undefined;
 
-    constructor(private http: HttpClient, private configService: ConfigService) {
+    constructor(private http: HttpClient, configService: ConfigService) {
         super();
         this.baseUrl = configService.getBaseURI();
     }
@@ -39,8 +39,8 @@ export class NotificationService extends BaseService {
             .catch(err => console.log('Error while starting connection: ' + err))
 
         this.hubConnection.on(
-            "Send",
-            (data: AppNotification[]) => {
+            'HandleTagChanged',
+            (data: TagChangedNotification) => {
                 this._notificationSource.next(data);
             });
     }

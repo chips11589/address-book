@@ -1,14 +1,17 @@
 ﻿using Application;
+using Application.Common.Models;
+using Domain.Events;
 using FluentValidation.AspNetCore;
 using Infrastructure;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebAPI.EventHandlers;
 using WebAPI.Filters;
 using WebAPI.Hubs;
-using WebAPI.Services.Notification;
 
 namespace WebAPI
 {
@@ -47,7 +50,7 @@ namespace WebAPI
 
             // Register SignalR
             services.AddSignalR();
-            services.AddSingleton<INotificationService, NotificationService>();
+            services.AddTransient<INotificationHandler<DomainEventNotification<TagChangedEvent>>, TagChangedEventHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

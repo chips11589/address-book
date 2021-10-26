@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import * as $ from 'jquery';
 import { NotificationService } from '../services/notification.service';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,9 @@ export class NotificationBarComponent {
     @Input() notificationType: string;
     @ViewChild('modal', { static: false }) modal: ElementRef;
 
-    notifications: AppNotification[];
+    readonly maxNotifications: number = 5;
+
+    notifications: AppNotification[] = [];
     private subscription : Subscription;
 
     isModalOpen: boolean = false;
@@ -25,14 +27,15 @@ export class NotificationBarComponent {
 
     ngOnInit() {
         this.subscription = this.notificationService.notificationObservable$
-            .subscribe(notifications => {
+            .subscribe(notification => {
                 var _self = this;
 
-                if (notifications.length === 0) {
+                if (notification == null) {
                     return;
                 }
 
-                this.notifications = notifications
+                this.notifications.unshift(notification);
+                this.notifications.splice(_self.maxNotifications);
 
                 if (this.timer) {
                     clearTimeout(this.timer);

@@ -1,12 +1,15 @@
-﻿export interface AppNotification {
-    message: string,
-    targetObjectId: string,
-    targetObjectName: string,
-    notificationType: NotificationTypes
+﻿export interface TagChangedNotification extends AppNotification {
+    tagId: string,
+    tagName: string,
+    tagChangedType: TagChangedType
 }
 
-export enum NotificationTypes {
-    TagAdded = 0,
-    TagUpdated = 1,
-    TagRemoved = 2
+export interface AppNotification {
+    message: string
+}
+
+export enum TagChangedType {
+    Added = 0,
+    Updated = 1,
+    Removed = 2
 }

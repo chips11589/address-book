@@ -4,7 +4,7 @@ import { Contact, Tag } from '../models/entities.interface';
 import { Subscription } from 'rxjs';
 import { TagService } from '../services/tag.service';
 import { NotificationService } from '../../shared/services/notification.service';
-import { NotificationTypes } from '../../shared/models/notification.interface';
+import { TagChangedType } from '../../shared/models/notification.interface';
 
 @Component({
     selector: 'contact-list',
@@ -33,25 +33,21 @@ export class ContactListComponent {
         });
 
         this.notificationSubscription = this.notificationService.notificationObservable$
-            .subscribe(notifications => {
-                if (notifications.length === 0) {
+            .subscribe(notification => {
+                if (notification == null) {
                     return;
                 }
 
-                for (var i = 0; i < notifications.length; i++) {
-                    var notification = notifications[i];
-
-                    switch (notification.notificationType) {
-                        case NotificationTypes.TagUpdated:
-                            this.onTagEdited({ id: notification.targetObjectId, name: notification.targetObjectName });
-                            break;
-                        case NotificationTypes.TagAdded:
-                            this.onTagAdded({ id: notification.targetObjectId, name: notification.targetObjectName });
-                            break;
-                        case NotificationTypes.TagRemoved:
-                            this.onTagRemoved({ id: notification.targetObjectId, name: notification.targetObjectName });
-                            break;
-                    }
+                switch (notification.tagChangedType) {
+                    case TagChangedType.Updated:
+                        this.onTagEdited({ id: notification.tagId, name: notification.tagName });
+                        break;
+                    case TagChangedType.Added:
+                        this.onTagAdded({ id: notification.tagId, name: notification.tagName });
+                        break;
+                    case TagChangedType.Removed:
+                        this.onTagRemoved({ id: notification.tagId, name: notification.tagName });
+                        break;
                 }
             });
     }
@@ -91,8 +87,8 @@ export class ContactListComponent {
     }
 
     onTagAdded(tag: Tag) {
-        var addedGlobalTag = this.allTags.find(globalTag => globalTag.id === tag.id);
-        if (typeof addedGlobalTag === 'undefined') {
+        var currentTag = this.allTags.find(globalTag => globalTag.id === tag.id);
+        if (typeof currentTag === 'undefined') {
             this.allTags.push(tag);
         }
     }
@@ -108,9 +104,9 @@ export class ContactListComponent {
             }
         }
 
-        var updatedGlobalTag = this.allTags.find(globalTag => globalTag.id === tag.id);
-        if (typeof updatedGlobalTag !== 'undefined') {
-            updatedGlobalTag.name = tag.name;
+        var currentTag = this.allTags.find(globalTag => globalTag.id === tag.id);
+        if (typeof currentTag !== 'undefined') {
+            currentTag.name = tag.name;
         }
     }
 
@@ -119,15 +115,15 @@ export class ContactListComponent {
             let contact = this.contacts[i];
 
             // untick the checkbox for the tag which has been deleted
-            var removedTag = contact.tags.find(contactTag => contactTag.id === tag.id);
+            let removedTag = contact.tags.find(contactTag => contactTag.id === tag.id);
             if (typeof removedTag !== 'undefined') {
                 contact.tags.remove(removedTag);
             }
         }
 
-        var removedGlobalTag = this.allTags.find(globalTag => globalTag.id === tag.id);
-        if (typeof removedGlobalTag !== 'undefined') {
-            this.allTags.remove(removedGlobalTag);
+        let currentTag = this.allTags.find(globalTag => globalTag.id === tag.id);
+        if (typeof currentTag !== 'undefined') {
+            this.allTags.remove(currentTag);
         }
     }
 

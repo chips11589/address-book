@@ -5,15 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="SQL\SchemaObjects\Schema_1_0\Indexes\ContactFullTextIndex.sql" />
-    <None Remove="SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContactAutocomplete.sql" />
-    <None Remove="SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContacts.sql" />
+    <None Remove="Persistence\SQL\SchemaObjects\Schema_1_0\Indexes\ContactFullTextIndex.sql" />
+    <None Remove="Persistence\SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContactAutocomplete.sql" />
+    <None Remove="Persistence\SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContacts.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="SQL\SchemaObjects\Schema_1_0\Indexes\ContactFullTextIndex.sql" />
-    <EmbeddedResource Include="SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContactAutocomplete.sql" />
-    <EmbeddedResource Include="SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContacts.sql" />
+    <EmbeddedResource Include="Persistence\SQL\SchemaObjects\Schema_1_0\Indexes\ContactFullTextIndex.sql" />
+    <EmbeddedResource Include="Persistence\SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContactAutocomplete.sql" />
+    <EmbeddedResource Include="Persistence\SQL\SchemaObjects\Schema_1_0\StoredProcedures\GetContacts.sql" />
   </ItemGroup>
 
   <ItemGroup>

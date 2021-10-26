@@ -12,7 +12,7 @@ namespace Infrastructure.Persistence.EntityFrameworkCore.Migrations
 
         public Schema_1_0()
         {
-            _sqlResourcePath = $"Infrastructure.SQL.SchemaObjects.{GetType().Name}";
+            _sqlResourcePath = $"Infrastructure.Persistence.SQL.SchemaObjects.{GetType().Name}";
         }
 
         protected override void Up(MigrationBuilder migrationBuilder)

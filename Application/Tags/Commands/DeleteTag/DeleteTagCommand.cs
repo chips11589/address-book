@@ -1,4 +1,6 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Models;
+using Domain.Events;
 using MediatR;
 using System;
 using System.Threading;
@@ -14,10 +16,12 @@ namespace Application.Tags.Commands.DeleteTag
     public class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand>
     {
         private readonly IApplicationDbContext _context;
+        private readonly IPublisher _publisher;
 
-        public DeleteTagCommandHandler(IApplicationDbContext context)
+        public DeleteTagCommandHandler(IApplicationDbContext context, IPublisher publisher)
         {
             _context = context;
+            _publisher = publisher;
         }
 
         public async Task<Unit> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
@@ -33,6 +37,8 @@ namespace Application.Tags.Commands.DeleteTag
             _context.Tags.Remove(tag);
 
             await _context.SaveChangesAsync(cancellationToken);
+
+            await _publisher.Publish(new DomainEventNotification<TagChangedEvent>(new TagChangedEvent(tag, TagChangedType.Removed)));
 
             return Unit.Value;
         }

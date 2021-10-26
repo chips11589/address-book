@@ -1,6 +1,8 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Models;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Events;
 using MediatR;
 using System;
 using System.Threading;
@@ -17,11 +19,13 @@ namespace Application.Tags.Commands.CreateTag
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IPublisher _publisher;
 
-        public CreateTagCommandHandler(IApplicationDbContext context, IMapper mapper)
+        public CreateTagCommandHandler(IApplicationDbContext context, IMapper mapper, IPublisher publisher)
         {
             _context = context;
             _mapper = mapper;
+            _publisher = publisher;
         }
 
         public async Task<Guid> Handle(CreateTagCommand request, CancellationToken cancellationToken)
@@ -31,6 +35,8 @@ namespace Application.Tags.Commands.CreateTag
             _context.Tags.Add(tag);
 
             await _context.SaveChangesAsync(cancellationToken);
+
+            await _publisher.Publish(new DomainEventNotification<TagChangedEvent>(new TagChangedEvent(tag, TagChangedType.Added)));
 
             return tag.Id;
         }
