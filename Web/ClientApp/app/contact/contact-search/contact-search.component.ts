@@ -1,6 +1,7 @@
 ﻿import { Component } from '@angular/core';
-import { ContactService } from '../services/contact.service';
 import { ContactAutoComplete } from '../models/contact-auto-complete.interface';
+import { GetContactsQuery } from '../models/queries.interface';
+import { ContactService } from '../services/contact.service';
 import { TagService } from '../services/tag.service';
 
 @Component({
@@ -9,8 +10,7 @@ import { TagService } from '../services/tag.service';
     styleUrls: ['./contact-search.component.css']
 })
 export class ContactSearchComponent {
-    searchQuery: string = '';
-    searchId: any;
+    query: GetContactsQuery;
 
     timeOut: number = 300;
     timer: any;
@@ -67,16 +67,17 @@ export class ContactSearchComponent {
 
     itemSelectCallback(obj: any, displayPath: string) {
         if (obj) {
-            this.searchQuery = obj[displayPath];
-            this.searchId = obj['id'];
+            if (obj[displayPath].indexOf('#') === 0) {
+                this.query = { tagId: obj['id'] };
+            }
+            else {
+                this.query = { searchQuery: obj[displayPath] };
+            }
             this.searchContact();
         }
     }
 
     searchContact() {
-        this.contactService.searchContact({
-            searchQuery: this.searchQuery,
-            tagId: this.searchId || ''
-        });
+        this.contactService.searchContact(this.query);
     }
 }

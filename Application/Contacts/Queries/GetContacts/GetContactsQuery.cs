@@ -38,6 +38,7 @@ namespace Application.Contacts.Queries.GetContacts
             if (request.TagId != default)
             {
                 results = (await _context.Tags.Include(tag => tag.Contacts)
+                    .ThenInclude(contact => contact.Tags)
                     .FirstOrDefaultAsync(tag => tag.Id == request.TagId)).Contacts.ToList();
             }
             else if (!string.IsNullOrWhiteSpace(request.SearchQuery))

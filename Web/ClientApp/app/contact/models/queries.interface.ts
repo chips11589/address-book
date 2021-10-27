@@ -1,6 +1,6 @@
 ﻿export interface GetContactsQuery {
-    searchQuery: string,
-    tagId: string
+    searchQuery?: string,
+    tagId?: string
 }
 
 export interface GetContactAutoCompleteQuery {
