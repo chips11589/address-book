@@ -45,8 +45,7 @@ namespace WebAPI
                     .AllowCredentials());
             });
 
-            services.AddMvc(options => options.Filters.Add<ApiExceptionFilterAttribute>())
-                .AddFluentValidation(configuration => configuration.AutomaticValidationEnabled = false);
+            services.AddMvc(options => options.Filters.Add<ApiExceptionFilterAttribute>());
 
             // Register SignalR
             services.AddSignalR();
