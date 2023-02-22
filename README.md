@@ -4,10 +4,10 @@ Demo: https://app-address-book-eu.herokuapp.com (you may have to refresh the web
 
 ### What is this repository for? ###
 
-* This is a simple Address Book using ASP.NET Core 3.1, SignalR Core 3.1 and AngularJs 8.2.12
+* This is a simple Address Book using .NET 6, SignalR Core 3.1 and AngularJs 8.2.12
 * Solution structure follows Clean Architecture (https://github.com/jasontaylordev/CleanArchitecture), with CQRS + MediatR
 * Full-text search - FREETEXT predicate is used to generate the autocomplete suggestions for the search box (https://docs.microsoft.com/en-us/sql/t-sql/queries/freetext-transact-sql)
-* ASP.NET Core 3.0 provides back-end Web API, with CORS enabled
+* .NET 6 provides back-end Web API, with CORS enabled
 * SignalR Core provides Tag CRUD notification and tag-list synchronisation among user sessions
 * AngularJs 8.2.12 provides front-end templating. Front-end project utilises modular structure, components and directives in order to maximise the code reusability and logical separation
 * RxJs Observables / Subjects are widely used in order to facilitate communication among app components
@@ -16,7 +16,7 @@ Demo: https://app-address-book-eu.herokuapp.com (you may have to refresh the web
 
 ### How do I get set up? ###
 
-* Precondition: .NET Core 3.1 or above, SQL Server (with Full-Text Search enabled) and NodeJs have been installed on the server(s)
+* Precondition: .NET 6 or above, SQL Server (with Full-Text Search enabled) and NodeJs have been installed on the server(s)
 * Update the ConnectionStrings:DefaultConnection in the WebAPI\appsettings.json
 * Set WebAPI as the startup project, run it to trigger EF Core migrations and schema SQL file execution. Or run ef core command to start the migrations manually:  `dotnet ef database update --project Infrastructure\Infrastructure.csproj --startup-project WebAPI\WebAPI.csproj`
 * Update the _baseURI in the Web\ClientApp\app\shared\utils\config.service.ts to match the applicationUrl of WebAPI project
