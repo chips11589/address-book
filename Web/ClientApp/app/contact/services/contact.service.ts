@@ -15,7 +15,7 @@ export class ContactService extends BaseService {
     private _contactSource = new BehaviorSubject<Contact[]>([]);
     contactObservable$ = this._contactSource.asObservable();
 
-    constructor(private http: HttpClient, private configService: ConfigService) {
+    constructor(private http: HttpClient, configService: ConfigService) {
         super();
         this.baseUrl = configService.getApiURI();
     }

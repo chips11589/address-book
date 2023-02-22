@@ -15,7 +15,7 @@ export class ContactDetailsComponent {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            var id = params['id']; // (+) converts string 'id' to a number
+            var id = params['id'];
 
             if (typeof id !== 'undefined') {
                 this.contactService.getContact(id)

@@ -4,6 +4,7 @@ import { Contact, Tag } from '../models/entities.interface';
 import { Subscription } from 'rxjs';
 import { TagService } from '../services/tag.service';
 import { NotificationService } from '../../shared/services/notification.service';
+import { ActivatedRoute } from '@angular/router';
 import { TagChangedType } from '../../shared/models/notification.interface';
 
 @Component({
@@ -18,13 +19,23 @@ export class ContactListComponent {
     selectedItem: Contact;
     allTags: Tag[];
     originalTags: Tag[];
+    id: string;
 
-    constructor(private contactService: ContactService, private tagService: TagService,
-        private notificationService: NotificationService) { }
+    constructor(
+        private contactService: ContactService,
+        private tagService: TagService,
+        private notificationService: NotificationService,
+        private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.subscription = this.contactService.contactObservable$.subscribe(contacts => {
             this.contacts = contacts;
+            this.setSelectedItemOnLoad();
+        });
+
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            this.setSelectedItemOnLoad();
         });
 
         this.tagService.getTags().subscribe(tags => {
@@ -84,6 +95,12 @@ export class ContactListComponent {
 
     selectItem(contact: Contact) {
         this.selectedItem = contact;
+    }
+
+    setSelectedItemOnLoad() {
+        if (typeof this.selectedItem === 'undefined' && this.contacts.length > 0) {
+            this.selectedItem = this.contacts.find(contact => contact.id == this.id);
+        }
     }
 
     onTagAdded(tag: Tag) {
