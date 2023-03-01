@@ -1,13 +1,8 @@
-﻿using Application.Common.Interfaces;
-using Application.Contacts;
+﻿using Application.Contacts;
 using Application.Contacts.Queries;
-using Application.Tags;
-using Domain.Entities;
 using HotChocolate;
 using HotChocolate.Types;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
