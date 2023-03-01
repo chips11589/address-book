@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Tags;
-using Application.Tags.Commands.UpdateContactTags;
+using Application.Tags.Commands;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

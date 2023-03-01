@@ -1,7 +1,5 @@
 ﻿using Application.Contacts;
-using Application.Contacts.Queries.GetAutoComplete;
-using Application.Contacts.Queries.GetContact;
-using Application.Contacts.Queries.GetContacts;
+using Application.Contacts.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Contacts.Queries.GetAutoComplete
+namespace Application.Contacts.Queries
 {
     public class GetContactAutoCompleteQuery : IRequest<List<ContactAutoCompleteDto>>
     {

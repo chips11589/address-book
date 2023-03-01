@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Tags.Commands.UpdateContactTags
+namespace Application.Tags.Commands
 {
     public class UpdateContactTagsCommand : IRequest
     {

@@ -1,9 +1,6 @@
 ﻿using Application.Tags;
-using Application.Tags.Commands.CreateTag;
-using Application.Tags.Commands.DeleteTag;
-using Application.Tags.Commands.UpdateContactTags;
-using Application.Tags.Commands.UpdateTag;
-using Application.Tags.Queries.GetTag;
+using Application.Tags.Commands;
+using Application.Tags.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

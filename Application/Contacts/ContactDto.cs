@@ -18,5 +18,6 @@ namespace Application.Contacts
         public string LinkedIn { get; set; }
         public string Skype { get; set; }
         public IList<TagDto> Tags { get; private set; } = new List<TagDto>();
+        public List<Guid> TagIds { get; set; } = new List<Guid> { Guid.Empty };
     }
 }

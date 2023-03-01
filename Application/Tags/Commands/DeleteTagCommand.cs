@@ -6,7 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Tags.Commands.DeleteTag
+namespace Application.Tags.Commands
 {
     public class DeleteTagCommand : IRequest
     {

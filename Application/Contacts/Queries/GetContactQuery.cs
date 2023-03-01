@@ -6,7 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Contacts.Queries.GetContact
+namespace Application.Contacts.Queries
 {
     public class GetContactQuery : IRequest<ContactDto>
     {

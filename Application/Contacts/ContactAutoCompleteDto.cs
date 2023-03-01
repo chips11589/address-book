@@ -1,4 +1,4 @@
-﻿namespace Application.Contacts.Queries.GetAutoComplete
+﻿namespace Application.Contacts
 {
     public class ContactAutoCompleteDto
     {

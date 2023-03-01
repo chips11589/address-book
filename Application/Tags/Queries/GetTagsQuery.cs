@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Tags.Queries.GetTag
+namespace Application.Tags.Queries
 {
     public class GetTagsQuery : IRequest<List<TagDto>>
     { }

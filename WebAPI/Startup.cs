@@ -1,7 +1,6 @@
 ﻿using Application;
 using Application.Common.Models;
 using Domain.Events;
-using FluentValidation.AspNetCore;
 using Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using WebAPI.EventHandlers;
 using WebAPI.Filters;
 using WebAPI.Hubs;
+using WebAPI.Queries;
 
 namespace WebAPI
 {
@@ -29,6 +29,12 @@ namespace WebAPI
         {
             services.AddApplication();
             services.AddInfrastructure(Configuration);
+
+            services.AddGraphQLServer()
+                .AddQueryType()
+                .AddTypeExtension<ContactQuery>()
+                .AddTypeExtension<TagQuery>()
+                .AddType<ContactType>();
 
             // Need to specify origins otherwise Cors policies for Signal Core won't work
             // https://github.com/aspnet/SignalR/issues/2110
@@ -68,6 +74,7 @@ namespace WebAPI
             {
                 endpoints.MapHub<NotificationHub>("/notificationHub");
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapGraphQL();
             });
         }
     }

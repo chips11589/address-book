@@ -8,7 +8,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Tags.Commands.CreateTag
+namespace Application.Tags.Commands
 {
     public class CreateTagCommand : IRequest<Guid>
     {
