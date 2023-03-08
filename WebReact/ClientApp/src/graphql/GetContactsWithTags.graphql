@@ -1,0 +1,12 @@
+﻿query GetContactsWithTags($searchQuery: String!) {
+  contacts(query: {
+    searchQuery: $searchQuery
+  }) {
+    id
+    firstName
+    tags {
+      id
+      name
+    }
+  }
+}

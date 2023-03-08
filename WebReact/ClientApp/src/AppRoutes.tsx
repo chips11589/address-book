@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
