@@ -1,24 +1,20 @@
-import { GraphQLClient } from 'graphql-request';
 import * as React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { Layout } from './components/Layout';
 import './custom.css';
-import { GetContactsWithTagsDocument } from './graphql/graphql-operations';
-
-const client = new GraphQLClient('http://localhost:30232/graphql/', {
-    fetch
-});
+import contactService from './services/ContactService';
 
 export default class App extends React.Component {
     static displayName = App.name;
 
     constructor(props) {
         super(props);
+    }
 
-        client.request(GetContactsWithTagsDocument, {
-            searchQuery: 'sample'
-        }).then(data => console.log(data.contacts));
+    async componentDidMount() {
+        var data = await contactService.getContacts('sample');
+        console.log(data.contacts);
     }
 
     render() {

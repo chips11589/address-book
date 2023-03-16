@@ -1,4 +1,5 @@
 import * as React from 'react';
+import contactService from '../services/ContactService';
 
 export class FetchData extends React.Component<any, any> {
     static displayName = FetchData.name;
@@ -8,8 +9,9 @@ export class FetchData extends React.Component<any, any> {
         this.state = { forecasts: [], loading: true };
     }
 
-    componentDidMount() {
-        this.populateWeatherData();
+    async componentDidMount() {
+        var data = await contactService.getContacts('sample');
+        console.log(data.contacts);
     }
 
     static renderForecastsTable(forecasts) {
@@ -49,11 +51,5 @@ export class FetchData extends React.Component<any, any> {
                 {contents}
             </div>
         );
-    }
-
-    async populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        this.setState({ forecasts: data, loading: false });
     }
 }
