@@ -22,9 +22,9 @@ ARG SQL_CONNECTION_STR
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-ENV ASPNETCORE_URLS=http://+:80
+ENV ASPNETCORE_URLS=http://+:8080
 ENV ConnectionStrings__DefaultConnection=$SQL_CONNECTION_STR
 
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT ["dotnet", "WebAPI.dll"]
