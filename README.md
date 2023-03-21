@@ -1,6 +1,6 @@
 # README #
 
-Demo: https://app-address-book-eu.herokuapp.com (you may have to refresh the web page twice and wait for the website to load as it is hosted on free tier of heroku)
+Demo: http://web.chipsvien.uk/contact
 
 ### What is this repository for? ###
 
@@ -14,7 +14,12 @@ Demo: https://app-address-book-eu.herokuapp.com (you may have to refresh the web
 * Automapper is used to map objects from Entity to DTO and vice versa
 * Dapper is used for some frequently called database requests in order to improve query performance and flexibly map query results to custom objects. Note that Entity Framework Core also supports custom object mapping, however, the custom object type needs to be explicitly declared as a DbSet of the DbContext, which is not desirable in this case.
 
-### How do I get set up? ###
+### How are these services being deployed?
+* The services are deployed as docker containers on Google Cloud free instances.
+* Docker compose is used to initialise the services and set up the internal networks.
+* Nginx is used as a reverse proxy to redirect the traffic to the appropriate services based on request domain.
+
+### How do I get set up locally? ###
 
 * Precondition: .NET 6 or above, SQL Server (with Full-Text Search enabled) and NodeJs have been installed on the server(s)
 * Update the ConnectionStrings:DefaultConnection in the WebAPI\appsettings.json
