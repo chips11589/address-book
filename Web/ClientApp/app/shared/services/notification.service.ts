@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import * as SignalR from "@microsoft/signalr";
+import { BehaviorSubject } from 'rxjs';
 
 import { BaseService } from '../../shared/services/base.service';
 import { ConfigService } from '../../shared/utils/config.service';
-import { HttpClient } from '@angular/common/http';
 import { TagChangedNotification } from '../models/notification.interface';
 
 @Injectable()
@@ -15,7 +14,7 @@ export class NotificationService extends BaseService {
 
     private hubConnection: SignalR.HubConnection | undefined;
 
-    constructor(private http: HttpClient, configService: ConfigService) {
+    constructor(configService: ConfigService) {
         super();
         this.baseUrl = configService.getBaseURI();
     }

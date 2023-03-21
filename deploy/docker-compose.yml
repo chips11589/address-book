@@ -3,22 +3,23 @@ services:
     image: registry.gitlab.com/trivien/address-book/web-api
     pull_policy: always
     networks:
-      - proxy-tier
+      - api-tier
   web_angular:
     image: registry.gitlab.com/trivien/address-book/web-angular
     pull_policy: always
     networks:
-      - proxy-tier
+      - web-tier
   nginx:
     image: nginx:latest
     container_name: mynginx
     ports:
       - "80:80"
     networks:
-      - proxy-tier
+      - api-tier
+      - web-tier
     volumes:
       - /home/chips/var/www:/usr/share/nginx/html:ro
       - /home/chips/var/nginx:/etc/nginx:ro
 networks:
   api-tier: {}
-  proxy-tier: {}
+  web-tier: {}
