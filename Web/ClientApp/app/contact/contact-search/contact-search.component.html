@@ -1,7 +1,7 @@
 <div class="contact-search">
     <input typeahead [displayPath]="'suggestion'" [getSourceCallback]="getSourceCallback.bind(this)" [itemSelectCallback]="itemSelectCallback.bind(this)"
            maxlength="255"
-           (keyup.enter)="searchContact()"
+           (keyup.enter)="searchContactWithQuery($event.target.value)"
            placeholder="Search by Name, Company or #Tag" type="text" class="form-control typeahead" />
     <p class="text-hint">Type in "sam" or "wil" to see the list of sample contact</p>
 </div>

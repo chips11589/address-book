@@ -9,3 +9,7 @@ li.contact-row {
 .tag-item {
     margin-right: 5px;
 }
+
+.hidden {
+    display: none;
+}

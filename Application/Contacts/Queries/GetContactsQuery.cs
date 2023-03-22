@@ -46,22 +46,26 @@ namespace Application.Contacts.Queries
             {
                 var contacts = new Dictionary<Guid, Contact>();
                 await _readDbConnection
-                    .QueryAsync<Contact, Tag, Contact>("EXECUTE dbo.GetContacts @searchQuery", (contact, tag) =>
-                    {
-                        Contact contactEntity = contact;
+                    .QueryAsync<Contact, Tag, Contact>(
+                        "EXECUTE dbo.GetContacts @searchQuery",
+                        (contact, tag) => LinkContactWithTags(contacts, contact, tag),
+                        new { searchQuery = request.SearchQuery }
+                    );
 
-                        if (!contacts.TryGetValue(contact.Id, out contactEntity))
-                        {
-                            contacts.Add(contact.Id, contact);
-                            contactEntity = contact;
-                        }
-
-                        if (tag != null)
-                        {
-                            contactEntity.Tags.Add(tag);
-                        }
-                        return contactEntity;
-                    }, new { searchQuery = request.SearchQuery });
+                results = contacts.Values.ToList();
+            }
+            else
+            {
+                var contacts = new Dictionary<Guid, Contact>();
+                await _readDbConnection
+                    .QueryAsync<Contact, Tag, Contact>(
+                        "SELECT TOP 10 c.*, t.* " +
+                        "FROM Contacts c " +
+                        "LEFT JOIN ContactTag ct ON c.Id = ct.ContactsId " +
+                        "LEFT JOIN Tags t ON t.Id = ct.TagsId",
+                        (contact, tag) => LinkContactWithTags(contacts, contact, tag),
+                        new { searchQuery = request.SearchQuery }
+                    );
 
                 results = contacts.Values.ToList();
             }
@@ -70,6 +74,21 @@ namespace Application.Contacts.Queries
                 .OrderBy(contact => contact.CompanyName)
                 .ThenBy(contact => contact.Surname)
                 .ToList();
+        }
+
+        public static Contact LinkContactWithTags(Dictionary<Guid, Contact> contacts, Contact contact, Tag tag)
+        {
+            if (!contacts.TryGetValue(contact.Id, out Contact contactEntity))
+            {
+                contacts.Add(contact.Id, contact);
+                contactEntity = contact;
+            }
+
+            if (tag != null)
+            {
+                contactEntity.Tags.Add(tag);
+            }
+            return contactEntity;
         }
     }
 }

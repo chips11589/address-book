@@ -1,4 +1,5 @@
 ﻿import { Component } from '@angular/core';
+import { debug } from 'console';
 import { ContactAutoComplete } from '../models/contact-auto-complete.interface';
 import { GetContactsQuery } from '../models/queries.interface';
 import { ContactService } from '../services/contact.service';
@@ -19,12 +20,14 @@ export class ContactSearchComponent {
 
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.searchContact();
+    }
 
     getSourceCallback(query: string, syncResults: any, asyncResults: any) {
         // tag autocomplete
         if (query.indexOf('#') === 0) {
-            var tagFilter = query.substr(1).toLowerCase();
+            var tagFilter = query.substring(1).toLowerCase();
             var tagSuggestions = new Array<ContactAutoComplete>();
 
             for (var i = 0; i < this.tagService.allTags.length; i++) {
@@ -79,5 +82,11 @@ export class ContactSearchComponent {
 
     searchContact() {
         this.contactService.searchContact(this.query);
+    }
+
+    searchContactWithQuery(query) {
+        this.contactService.searchContact({
+            searchQuery: query
+        });
     }
 }

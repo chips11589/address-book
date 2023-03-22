@@ -21,7 +21,7 @@ export class ContactService extends BaseService {
     }
 
     searchContact(query: GetContactsQuery) {
-        return this.http.get(this.baseUrl + '/contact?' + this.getQueryString(query))
+        return this.http.get(this.baseUrl + '/contact?' + (query ? this.getQueryString(query) : ''))
             .subscribe(result => {
                 this._contactSource.next(result as Contact[]);
             }, this.handleError);

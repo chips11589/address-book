@@ -1,5 +1,8 @@
-<ul class="contact-list list-group">
-    <li [routerLink]="['/contact', contact.id]" (click)="selectItem(contact)" [ngClass]="{'active': selectedItem && selectedItem.id == contact.id}" class="contact-row list-group-item" *ngFor="let contact of contacts">
+<p [ngClass]="{'hidden': contacts.length > 0}">No record found</p>
+<ul class="contact-list list-group" [ngClass]="{'hidden': contacts.length == 0}">
+    <li [routerLink]="['/contact', contact.id]" (click)="selectItem(contact)"
+        [ngClass]="{'active': selectedItem && selectedItem.id == contact.id}" class="contact-row list-group-item"
+        *ngFor="let contact of contacts">
         <div class="contact-title row">
             <div class="col-sm-10"><b>{{contact.firstName}} {{contact.surname}}</b></div>
             <div class="col-sm-2">
