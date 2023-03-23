@@ -10,14 +10,14 @@
 # This template uses one generic job with conditional builds
 # for the default branch and all other (MR) branches.
 
-docker-build:
+docker-build-api:
   # Use the official docker image.
   image: docker:latest
   stage: build
   services:
     - docker:dind
-#   before_script:
-#     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
