@@ -54,8 +54,8 @@ docker-build-web-api:
         tag=":$CI_COMMIT_REF_SLUG"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-    - docker build . -f WebAPI/Dockerfile -t registry.gitlab.com/trivien/address-book/web-api
-    - docker push registry.gitlab.com/trivien/address-book/web-api --build-arg $CI_BUILD_ARG
+    - docker build . -f WebAPI/Dockerfile -t registry.gitlab.com/trivien/address-book/web-api --build-arg $CI_BUILD_ARG
+    - docker push registry.gitlab.com/trivien/address-book/web-api
   only:
       changes:
         - "WebAPI/**/*"
