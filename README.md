@@ -15,6 +15,8 @@ Demo: http://web.chipsvien.uk/contact
 * Dapper is used for some frequently called database requests in order to improve query performance and flexibly map query results to custom objects. Note that Entity Framework Core also supports custom object mapping, however, the custom object type needs to be explicitly declared as a DbSet of the DbContext, which is not desirable in this case.
 
 ### How are these services being deployed?
+
+* CI/CD is facilitated by GitLab pipelines (.gitlab-ci.yml). Images are built and pushed to container registries for every commit pushed.
 * The services are deployed as docker containers on Google Cloud free instances.
 * Docker compose is used to initialise the services and set up the internal networks.
 * Nginx is used as a reverse proxy to redirect the traffic to the appropriate services based on request domain.
