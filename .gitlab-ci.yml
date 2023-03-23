@@ -55,7 +55,7 @@ docker-build-web-api:
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
     - echo "Hello '$SQL_CONNECTION_STR'"
-    - docker build . -f WebAPI/Dockerfile -t registry.gitlab.com/trivien/address-book/web-api --build-arg SQL_CONNECTION_STR='$SQL_CONNECTION_STR'
+    - docker build . -f WebAPI/Dockerfile -t registry.gitlab.com/trivien/address-book/web-api --build-arg SQL_CONNECTION_STR="$SQL_CONNECTION_STR"
     - docker push registry.gitlab.com/trivien/address-book/web-api
   only:
       changes:
