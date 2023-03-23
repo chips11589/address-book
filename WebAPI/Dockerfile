@@ -23,6 +23,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 ENV ASPNETCORE_URLS=http://+:8080
+RUN echo $SQL_CONNECTION_STR
 ENV ConnectionStrings__DefaultConnection=$SQL_CONNECTION_STR
 
 EXPOSE 8080
