@@ -6,6 +6,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
+RUN npm install --global yarn
 RUN npm config set legacy-peer-deps true
 
 WORKDIR /src
