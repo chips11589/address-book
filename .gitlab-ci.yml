@@ -10,8 +10,12 @@
 # This template uses one generic job with conditional builds
 # for the default branch and all other (MR) branches.
 
+stages:
+  - test
+  - build
+
 run-tests:
-  image: mcr.microsoft.com/dotnet/sdk:6.0
+  image: mcr.microsoft.com/dotnet/sdk:6.0-alpine
   stage: test
   script:
     - dotnet test
