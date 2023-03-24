@@ -10,55 +10,40 @@
 # This template uses one generic job with conditional builds
 # for the default branch and all other (MR) branches.
 
+run-tests:
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  stage: test
+  script:
+    - dotnet test
+
 docker-build-web:
-  # Use the official docker image.
   image: docker:latest
   stage: build
   services:
     - docker:dind
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  # Default branch leaves tag empty (= latest tag)
-  # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
-    - |
-      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
-        tag=""
-        echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
-      else
-        tag=":$CI_COMMIT_REF_SLUG"
-        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
-      fi
     - docker build . -f Web/Dockerfile -t registry.gitlab.com/trivien/address-book/web-angular
     - docker push registry.gitlab.com/trivien/address-book/web-angular
   only:
-      changes:
-        - "Web/**/*"
+    changes:
+      - "Web/**/*"
 
 docker-build-web-api:
-  # Use the official docker image.
   image: docker:latest
   stage: build
+  needs: ["run-tests"]
   services:
     - docker:dind
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  # Default branch leaves tag empty (= latest tag)
-  # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
-    - |
-      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
-        tag=""
-        echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
-      else
-        tag=":$CI_COMMIT_REF_SLUG"
-        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
-      fi
     - docker build . -f WebAPI/Dockerfile -t registry.gitlab.com/trivien/address-book/web-api --build-arg SQL_CONNECTION_STR="$SQL_CONNECTION_STR"
     - docker push registry.gitlab.com/trivien/address-book/web-api
   only:
-      changes:
-        - "WebAPI/**/*"
-        - "Application/**/*"
-        - "Domain/**/*"
-        - "Infrastructure/**/*"
+    changes:
+      - "WebAPI/**/*"
+      - "Application/**/*"
+      - "Domain/**/*"
+      - "Infrastructure/**/*"
