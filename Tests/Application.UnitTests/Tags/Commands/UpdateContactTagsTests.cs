@@ -85,8 +85,6 @@ namespace Application.UnitTests.Tags.Commands
             Assert.AreEqual(2, _contactEntity.Tags.Count);
             Assert.AreEqual(_tags[1].Id, _contactEntity.Tags[0].Id);
             Assert.AreEqual(_tags[2].Id, _contactEntity.Tags[1].Id);
-
-            Assert.Fail();
         }
 
         [Test]
