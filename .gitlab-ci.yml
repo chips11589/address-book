@@ -59,3 +59,6 @@ docker-build-web-api:
   only:
       changes:
         - "WebAPI/**/*"
+        - "Application/**/*"
+        - "Domain/**/*"
+        - "Infrastructure/**/*"

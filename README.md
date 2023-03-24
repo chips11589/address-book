@@ -4,7 +4,7 @@ Demo: http://web.chipsvien.uk/contact
 
 ### What is this repository for? ###
 
-* This is a simple Address Book using .NET 6, SignalR Core 3.1 and AngularJs 8.2.12
+* This is a simple Address Book using .NET 6, SignalR Core and AngularJs 8.2.12
 * Solution structure follows Clean Architecture (https://github.com/jasontaylordev/CleanArchitecture), with CQRS + MediatR
 * Full-text search - FREETEXT predicate is used to generate the autocomplete suggestions for the search box (https://docs.microsoft.com/en-us/sql/t-sql/queries/freetext-transact-sql)
 * .NET 6 provides back-end Web API, with CORS enabled
