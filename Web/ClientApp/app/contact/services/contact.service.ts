@@ -15,15 +15,21 @@ export class ContactService extends BaseService {
     private _contactSource = new BehaviorSubject<Contact[]>([]);
     contactObservable$ = this._contactSource.asObservable();
 
+    private _loadingSource = new BehaviorSubject<boolean>(false);
+    loadingObservable$ = this._loadingSource.asObservable();
+
     constructor(private http: HttpClient, configService: ConfigService) {
         super();
         this.baseUrl = configService.getApiURI();
     }
 
     searchContact(query: GetContactsQuery) {
+        this._loadingSource.next(true);
+
         return this.http.get(this.baseUrl + '/contact?' + (query ? this.getQueryString(query) : ''))
             .subscribe(result => {
                 this._contactSource.next(result as Contact[]);
+                this._loadingSource.next(false);
             }, this.handleError);
     }
 

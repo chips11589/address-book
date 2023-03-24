@@ -1,5 +1,6 @@
-<p [ngClass]="{'hidden': contacts.length > 0}">No record found</p>
-<ul class="contact-list list-group" [ngClass]="{'hidden': contacts.length == 0}">
+<p [ngClass]="{'hidden': !loading}"><img src="../../../assets/images/Spinner-1s-50px.gif" /> Loading...</p>
+<p [ngClass]="{'hidden': loading || contacts.length > 0}">No record found</p>
+<ul class="contact-list list-group" [ngClass]="{'hidden': loading || contacts.length == 0}">
     <li [routerLink]="['/contact', contact.id]" (click)="selectItem(contact)"
         [ngClass]="{'active': selectedItem && selectedItem.id == contact.id}" class="contact-row list-group-item"
         *ngFor="let contact of contacts">

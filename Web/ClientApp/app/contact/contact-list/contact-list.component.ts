@@ -14,12 +14,14 @@ import { TagChangedType } from '../../shared/models/notification.interface';
 })
 export class ContactListComponent {
     contacts: Contact[];
-    subscription: Subscription;
+    searchSubscription: Subscription;
+    loadingSubscription: Subscription;
     notificationSubscription: Subscription;
     selectedItem: Contact;
     allTags: Tag[];
     originalTags: Tag[];
     id: string;
+    loading: boolean;
 
     constructor(
         private contactService: ContactService,
@@ -28,9 +30,13 @@ export class ContactListComponent {
         private route: ActivatedRoute) { }
 
     ngOnInit() {
-        this.subscription = this.contactService.contactObservable$.subscribe(contacts => {
+        this.searchSubscription = this.contactService.contactObservable$.subscribe(contacts => {
             this.contacts = contacts;
             this.setSelectedItemOnLoad();
+        });
+
+        this.loadingSubscription = this.contactService.loadingObservable$.subscribe(loading => {
+            this.loading = loading;
         });
 
         this.route.params.subscribe(params => {
@@ -145,7 +151,8 @@ export class ContactListComponent {
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        this.searchSubscription.unsubscribe();
         this.notificationSubscription.unsubscribe();
+        this.loadingSubscription.unsubscribe();
     }
 }
