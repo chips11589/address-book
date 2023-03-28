@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;
 
-namespace WebAPI.Hubs
+namespace WebAPI.Services
 {
     public sealed class NotificationHub : Hub<INotificationClient> { }
 }

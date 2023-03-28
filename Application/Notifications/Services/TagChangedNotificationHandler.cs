@@ -1,23 +1,19 @@
 ﻿using Application.Common.Models;
-using Application.Notifications;
-using Application.Notifications.Services;
 using Domain.Events;
 using MediatR;
-using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using WebAPI.Hubs;
 
-namespace WebAPI.EventHandlers
+namespace Application.Notifications.Services
 {
     public class TagChangedNotificationHandler : INotificationHandler<DomainEventNotification<TagChangedEvent>>
     {
-        private readonly IHubContext<NotificationHub, INotificationClient> _hubContext;
+        private readonly INotificationService _notificationService;
 
-        public TagChangedNotificationHandler(IHubContext<NotificationHub, INotificationClient> hubContext)
+        public TagChangedNotificationHandler(INotificationService notificationService)
         {
-            _hubContext = hubContext;
+            _notificationService = notificationService;
         }
 
         public Task Handle(DomainEventNotification<TagChangedEvent> notification, CancellationToken cancellationToken)
@@ -25,12 +21,12 @@ namespace WebAPI.EventHandlers
             var tagName = notification.DomainEvent.Tag.Name;
             var eventType = notification.DomainEvent.TagChangedType;
 
-            return _hubContext.Clients.All.HandleTagChangedNotification(new TagChangedNotificationDto
+            return _notificationService.NotifyTagChangedAsync(new TagChangedNotificationDto
             {
                 TagId = notification.DomainEvent.Tag.Id,
                 TagName = tagName,
                 TagChangedType = eventType,
-                Message = $"{DateTime.Now} Tag '{tagName}' {eventType}"
+                Message = $"{DateTime.Now} - Tag '{tagName}' {eventType}"
             });
         }
     }

@@ -11,9 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using WebAPI.EventHandlers;
 using WebAPI.Filters;
-using WebAPI.Hubs;
 using WebAPI.Services;
 
 namespace WebAPI

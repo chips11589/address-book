@@ -2,7 +2,6 @@
 using Application.Notifications.Services;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
-using WebAPI.Hubs;
 
 namespace WebAPI.Services
 {
