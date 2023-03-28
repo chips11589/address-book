@@ -4,12 +4,16 @@ import { BehaviorSubject } from 'rxjs';
 
 import { BaseService } from '../../shared/services/base.service';
 import { ConfigService } from '../../shared/utils/config.service';
-import { TagChangedNotification } from '../models/notification.interface';
+import { AppNotification, TagChangedNotification } from '../models/notification.interface';
 
 @Injectable()
 export class NotificationService extends BaseService {
     baseUrl: string = '';
-    private _notificationSource = new BehaviorSubject<TagChangedNotification>(null);
+
+    private _tagChangedNotificationSource = new BehaviorSubject<TagChangedNotification>(null);
+    tagChangedNotificationObservable$ = this._tagChangedNotificationSource.asObservable();
+
+    private _notificationSource = new BehaviorSubject<AppNotification>(null);
     notificationObservable$ = this._notificationSource.asObservable();
 
     private hubConnection: SignalR.HubConnection | undefined;
@@ -38,11 +42,17 @@ export class NotificationService extends BaseService {
             .then(() => console.log('Connection started'))
             .catch(err => console.log('Error while starting connection: ' + err))
 
-        this.hubConnection.on(
-            'HandleTagChanged',
-            (data: TagChangedNotification) => {
-                this._notificationSource.next(data);
-            });
+        this.hubConnection
+            .on('HandleTagChangedNotification',
+                (data: TagChangedNotification) => {
+                    this._tagChangedNotificationSource.next(data);
+                });
+
+        this.hubConnection
+            .on('HandleNotification',
+                (data: AppNotification) => {
+                    this._notificationSource.next(data);
+                });
     }
 }
 

@@ -1,5 +1,7 @@
 ﻿using Application;
 using Application.Common.Models;
+using Application.GraphQL.Queries;
+using Application.Notifications.Services;
 using Domain.Events;
 using Infrastructure;
 using MediatR;
@@ -12,7 +14,6 @@ using System;
 using WebAPI.EventHandlers;
 using WebAPI.Filters;
 using WebAPI.Hubs;
-using WebAPI.Queries;
 
 namespace WebAPI
 {
@@ -56,7 +57,8 @@ namespace WebAPI
 
             // Register SignalR
             services.AddSignalR();
-            services.AddTransient<INotificationHandler<DomainEventNotification<TagChangedEvent>>, TagChangedEventHandler>();
+            services.AddTransient<INotificationHandler<DomainEventNotification<TagChangedEvent>>, TagChangedNotificationHandler>();
+            services.AddSingleton<INotificationService, NotificationHub>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

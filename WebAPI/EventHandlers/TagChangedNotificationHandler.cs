@@ -1,5 +1,6 @@
 ﻿using Application.Common.Models;
 using Application.Notifications;
+using Application.Notifications.Services;
 using Domain.Events;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
@@ -10,11 +11,11 @@ using WebAPI.Hubs;
 
 namespace WebAPI.EventHandlers
 {
-    public class TagChangedEventHandler : INotificationHandler<DomainEventNotification<TagChangedEvent>>
+    public class TagChangedNotificationHandler : INotificationHandler<DomainEventNotification<TagChangedEvent>>
     {
         private readonly IHubContext<NotificationHub, INotificationClient> _hubContext;
 
-        public TagChangedEventHandler(IHubContext<NotificationHub, INotificationClient> hubContext)
+        public TagChangedNotificationHandler(IHubContext<NotificationHub, INotificationClient> hubContext)
         {
             _hubContext = hubContext;
         }
@@ -24,7 +25,7 @@ namespace WebAPI.EventHandlers
             var tagName = notification.DomainEvent.Tag.Name;
             var eventType = notification.DomainEvent.TagChangedType;
 
-            return _hubContext.Clients.All.HandleTagChanged(new TagChangedNotificationDto
+            return _hubContext.Clients.All.HandleTagChangedNotification(new TagChangedNotificationDto
             {
                 TagId = notification.DomainEvent.Tag.Id,
                 TagName = tagName,

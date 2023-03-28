@@ -1,7 +1,7 @@
 ﻿using Application.Contacts;
 using HotChocolate.Types;
 
-namespace WebAPI.Queries
+namespace Application.GraphQL.Queries
 {
     public class ContactType : ObjectType<ContactDto>
     {

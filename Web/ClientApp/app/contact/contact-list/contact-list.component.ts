@@ -49,7 +49,7 @@ export class ContactListComponent {
             this.tagService.allTags = tags;
         });
 
-        this.notificationSubscription = this.notificationService.notificationObservable$
+        this.notificationSubscription = this.notificationService.tagChangedNotificationObservable$
             .subscribe(notification => {
                 if (notification == null) {
                     return;

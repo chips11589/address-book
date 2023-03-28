@@ -1,8 +1,8 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import * as $ from 'jquery';
-import { NotificationService } from '../services/notification.service';
 import { Subscription } from 'rxjs';
 import { AppNotification } from '../models/notification.interface';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
     selector: 'notification-bar',
@@ -14,9 +14,10 @@ export class NotificationBarComponent {
     @ViewChild('modal', { static: false }) modal: ElementRef;
 
     readonly maxNotifications: number = 5;
-
     notifications: AppNotification[] = [];
-    private subscription : Subscription;
+
+    private tagChangedNotificationSubscription : Subscription;
+    private notificationSubscription: Subscription;
 
     isModalOpen: boolean = false;
     $modal: JQuery<HTMLElement>;
@@ -26,29 +27,36 @@ export class NotificationBarComponent {
     constructor(private notificationService: NotificationService) { }
 
     ngOnInit() {
-        this.subscription = this.notificationService.notificationObservable$
-            .subscribe(notification => {
-                var _self = this;
+        this.tagChangedNotificationSubscription = this.notificationService
+            .tagChangedNotificationObservable$
+            .subscribe(notification => this.showNotification(notification));
 
-                if (notification == null) {
-                    return;
-                }
+        this.notificationSubscription = this.notificationService
+            .notificationObservable$
+            .subscribe(notification => this.showNotification(notification));
+    }
 
-                this.notifications.unshift(notification);
-                this.notifications.splice(_self.maxNotifications);
+    showNotification(notification) {
+        var _self = this;
 
-                if (this.timer) {
-                    clearTimeout(this.timer);
-                }
+        if (notification == null) {
+            return;
+        }
 
-                this.timer = setTimeout(function () {
-                    _self.$modal.show(() => {
-                        _self.isModalOpen = true;
-                    }).delay(3000).hide(() => {
-                        _self.isModalOpen = false;
-                    });
-                }, this.timeOut);
+        this.notifications.unshift(notification);
+        this.notifications.splice(_self.maxNotifications);
+
+        if (this.timer) {
+            clearTimeout(this.timer);
+        }
+
+        this.timer = setTimeout(function () {
+            _self.$modal.show(() => {
+                _self.isModalOpen = true;
+            }).delay(2500).hide(() => {
+                _self.isModalOpen = false;
             });
+        }, this.timeOut);
     }
 
     ngAfterViewInit() {
@@ -56,6 +64,7 @@ export class NotificationBarComponent {
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        this.tagChangedNotificationSubscription.unsubscribe();
+        this.notificationSubscription.unsubscribe();
     }
 }

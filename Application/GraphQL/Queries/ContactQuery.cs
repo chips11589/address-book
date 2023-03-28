@@ -6,7 +6,7 @@ using MediatR;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAPI.Queries
+namespace Application.GraphQL.Queries
 {
     [ExtendObjectType(OperationTypeNames.Query)]
     public class ContactQuery
