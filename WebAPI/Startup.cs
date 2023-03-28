@@ -14,6 +14,7 @@ using System;
 using WebAPI.EventHandlers;
 using WebAPI.Filters;
 using WebAPI.Hubs;
+using WebAPI.Services;
 
 namespace WebAPI
 {
@@ -58,7 +59,10 @@ namespace WebAPI
             // Register SignalR
             services.AddSignalR();
             services.AddTransient<INotificationHandler<DomainEventNotification<TagChangedEvent>>, TagChangedNotificationHandler>();
-            services.AddSingleton<INotificationService, NotificationHub>();
+            services.AddSingleton<INotificationService, NotificationService>();
+
+            // Register hosted services
+            services.AddHostedService<DemoService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

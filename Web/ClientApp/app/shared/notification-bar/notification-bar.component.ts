@@ -53,7 +53,7 @@ export class NotificationBarComponent {
         this.timer = setTimeout(function () {
             _self.$modal.show(() => {
                 _self.isModalOpen = true;
-            }).delay(2500).hide(() => {
+            }).delay(5000).hide(() => {
                 _self.isModalOpen = false;
             });
         }, this.timeOut);

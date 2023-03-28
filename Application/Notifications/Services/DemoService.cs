@@ -21,7 +21,7 @@ namespace Application.Notifications.Services
         {
             _logger.LogInformation("Timed Hosted Service running.");
 
-            using (PeriodicTimer timer = new(TimeSpan.FromSeconds(10)))
+            using (PeriodicTimer timer = new(TimeSpan.FromSeconds(20)))
             {
                 try
                 {
@@ -29,7 +29,7 @@ namespace Application.Notifications.Services
                     {
                         await _notificationService.NotifyAsync(new NotificationDto
                         {
-                            Message = "Notifications appear every time you change a tag"
+                            Message = "Hello! Notifications appear every time you change a tag"
                         });
                     }
                 }
