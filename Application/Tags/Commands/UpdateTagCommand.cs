@@ -36,11 +36,13 @@ namespace Application.Tags.Commands
                 // TODO: Change this to NotFoundException
                 throw new Exception();
             }
-            _mapper.Map(request.Tag, tag); // TODO: Check if Tag.Id is reset
+            _mapper.Map(request.Tag, tag);
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            await _publisher.Publish(new DomainEventNotification<TagChangedEvent>(new TagChangedEvent(tag, TagChangedType.Updated)));
+            await _publisher.Publish(
+                new DomainEventNotification<TagChangedEvent>(new TagChangedEvent(tag, TagChangedType.Updated)),
+                cancellationToken);
 
             return Unit.Value;
         }

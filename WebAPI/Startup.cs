@@ -56,7 +56,6 @@ namespace WebAPI
 
             // Register SignalR
             services.AddSignalR();
-            services.AddTransient<INotificationHandler<DomainEventNotification<TagChangedEvent>>, TagChangedNotificationHandler>();
             services.AddSingleton<INotificationService, NotificationService>();
 
             // Register hosted services

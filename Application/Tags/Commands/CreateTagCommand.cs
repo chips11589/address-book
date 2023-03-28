@@ -36,7 +36,9 @@ namespace Application.Tags.Commands
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            await _publisher.Publish(new DomainEventNotification<TagChangedEvent>(new TagChangedEvent(tag, TagChangedType.Added)));
+            await _publisher.Publish(
+                new DomainEventNotification<TagChangedEvent>(new TagChangedEvent(tag, TagChangedType.Added)),
+                cancellationToken);
 
             return tag.Id;
         }

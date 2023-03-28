@@ -40,7 +40,7 @@ namespace Application.Notifications.Services
                 catch (Exception ex)
                 {
                     // TODO: Change this to scoped service so it can be respawned
-                    _logger.LogError(ex, "DemoService has crashed");
+                    _logger.LogError(ex, "DemoService has crashed.");
                 }
             }
         }
