@@ -13,6 +13,13 @@ namespace WebAPI.Queries
 {
     public class ContactResolver
     {
+        /// <summary>
+        /// This method is useful in case of no sql data, i.e. where the contact entity may only have a list of TagIds
+        /// that specifies which tags belong to it, and the tag entities do not hold any reference to contact entities.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="readDbConnection"></param>
+        /// <returns></returns>
         public Task<IReadOnlyList<TagDto>> GetTagsByTagIds(
             IResolverContext context,
             [Service] IApplicationReadDbConnection readDbConnection)
@@ -30,6 +37,13 @@ namespace WebAPI.Queries
                 }).LoadAsync(context.Parent<ContactDto>().TagIds);
         }
 
+        ///// <summary>
+        ///// This method is useful in case the client can choose whether to load the contacts with/without the tags
+        ///// and the tag entity has a reference (i.e. ContactId) to which contact it belongs.
+        ///// </summary>
+        ///// <param name="context"></param>
+        ///// <param name="readDbConnection"></param>
+        ///// <returns></returns>
         //public Task<IReadOnlyList<TagDto>> GetTagsByContactIds(
         //    IResolverContext context,
         //    [Service] IApplicationReadDbConnection readDbConnection)
