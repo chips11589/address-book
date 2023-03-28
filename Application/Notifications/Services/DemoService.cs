@@ -19,7 +19,7 @@ namespace Application.Notifications.Services
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation("Timed Hosted Service running.");
+            _logger.LogInformation("DemoService running.");
 
             using (PeriodicTimer timer = new(TimeSpan.FromSeconds(20)))
             {
@@ -35,7 +35,12 @@ namespace Application.Notifications.Services
                 }
                 catch (OperationCanceledException)
                 {
-                    _logger.LogInformation("Timed Hosted Service is stopping.");
+                    _logger.LogInformation("DemoService is stopping.");
+                }
+                catch (Exception ex)
+                {
+                    // TODO: Change this to scoped service so it can be respawned
+                    _logger.LogError(ex, "DemoService has crashed");
                 }
             }
         }
