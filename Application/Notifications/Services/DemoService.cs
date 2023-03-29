@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,6 +11,14 @@ namespace Application.Notifications.Services
     {
         private readonly ILogger<DemoService> _logger;
         private readonly INotificationService _notificationService;
+
+        private readonly Queue<string> _messages = new(
+            new string[]
+            {
+                "Notifications appear every time you change a tag.",
+                "Type '#' in the seach box to search contacts by a tag.",
+                "Hit 'enter' once you finished editing a tag."
+            });
 
         public DemoService(ILogger<DemoService> logger, INotificationService notificationService)
         {
@@ -27,10 +36,14 @@ namespace Application.Notifications.Services
                 {
                     while (await timer.WaitForNextTickAsync(stoppingToken))
                     {
+                        var currentMessage = _messages.Dequeue();
+
                         await _notificationService.NotifyAsync(new NotificationDto
                         {
-                            Message = "Hello! Notifications appear every time you change a tag"
+                            Message = currentMessage
                         });
+
+                        _messages.Enqueue(currentMessage);
                     }
                 }
                 catch (OperationCanceledException)
