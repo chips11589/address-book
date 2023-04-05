@@ -2,6 +2,7 @@
 using Infrastructure.Common.Constants;
 using Infrastructure.Persistence.Dapper;
 using Infrastructure.Persistence.EntityFrameworkCore;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ namespace Infrastructure
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             services.AddScoped<IApplicationReadDbConnection, ApplicationReadDbConnection>();
+            services.AddScoped<IContactRepository, ContactRepository>();
 
             return services;
         }

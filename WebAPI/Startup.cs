@@ -1,10 +1,7 @@
 ﻿using Application;
-using Application.Common.Models;
 using Application.GraphQL.Queries;
 using Application.Notifications.Services;
-using Domain.Events;
 using Infrastructure;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

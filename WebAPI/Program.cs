@@ -27,7 +27,7 @@ namespace WebAPI
 
                     if (context.Database.IsSqlServer())
                     {
-                        context.Database.Migrate();
+                        await context.Database.MigrateAsync();
                     }
 
                     await ApplicationDbContextSeed.CreateContactAsync(context);
